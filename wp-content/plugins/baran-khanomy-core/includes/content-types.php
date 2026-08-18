@@ -9,16 +9,9 @@ add_action( 'init', 'bk_register_content_types' );
 function bk_register_content_types() {
     register_post_type( 'bk_course', array(
         'labels' => array(
-            'name' => 'دوره‌ها',
-            'singular_name' => 'دوره',
-            'add_new' => 'افزودن دوره',
-            'add_new_item' => 'افزودن دوره جدید',
-            'edit_item' => 'ویرایش دوره',
-            'new_item' => 'دوره جدید',
-            'view_item' => 'مشاهده دوره',
-            'search_items' => 'جستجوی دوره‌ها',
-            'not_found' => 'دوره‌ای پیدا نشد',
-            'menu_name' => 'دوره‌ها',
+            'name' => 'دوره‌ها', 'singular_name' => 'دوره', 'add_new' => 'افزودن دوره', 'add_new_item' => 'افزودن دوره جدید',
+            'edit_item' => 'ویرایش دوره', 'new_item' => 'دوره جدید', 'view_item' => 'مشاهده دوره', 'search_items' => 'جستجوی دوره‌ها',
+            'not_found' => 'دوره‌ای پیدا نشد', 'menu_name' => 'دوره‌ها',
         ),
         'public' => true,
         'show_in_rest' => true,
@@ -29,54 +22,28 @@ function bk_register_content_types() {
     ) );
 
     register_taxonomy( 'bk_course_category', 'bk_course', array(
-        'labels' => array(
-            'name' => 'دسته‌بندی دوره‌ها',
-            'singular_name' => 'دسته‌بندی دوره',
-            'menu_name' => 'دسته‌بندی‌ها',
-        ),
-        'public' => true,
-        'show_in_rest' => true,
-        'hierarchical' => true,
+        'labels' => array('name' => 'دسته‌بندی دوره‌ها', 'singular_name' => 'دسته‌بندی دوره', 'menu_name' => 'دسته‌بندی‌ها'),
+        'public' => true, 'show_in_rest' => true, 'hierarchical' => true,
         'rewrite' => array( 'slug' => 'course-category' ),
     ) );
 
     register_post_type( 'bk_testimonial', array(
         'labels' => array(
-            'name' => 'نظرات هنرجویان',
-            'singular_name' => 'نظر هنرجو',
-            'add_new' => 'افزودن نظر',
-            'add_new_item' => 'افزودن نظر هنرجو',
-            'edit_item' => 'ویرایش نظر',
-            'new_item' => 'نظر جدید',
-            'view_item' => 'مشاهده نظر',
-            'search_items' => 'جستجوی نظرات',
-            'not_found' => 'نظری پیدا نشد',
-            'menu_name' => 'نظرات هنرجویان',
+            'name' => 'نظرات هنرجویان', 'singular_name' => 'نظر هنرجو', 'add_new' => 'افزودن نظر', 'add_new_item' => 'افزودن نظر هنرجو',
+            'edit_item' => 'ویرایش نظر', 'new_item' => 'نظر جدید', 'view_item' => 'مشاهده نظر', 'search_items' => 'جستجوی نظرات',
+            'not_found' => 'نظری پیدا نشد', 'menu_name' => 'نظرات هنرجویان',
         ),
-        'public' => false,
-        'show_ui' => true,
-        'show_in_rest' => true,
-        'menu_icon' => 'dashicons-format-chat',
+        'public' => false, 'show_ui' => true, 'show_in_rest' => true, 'menu_icon' => 'dashicons-format-chat',
         'supports' => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
     ) );
 
     register_post_type( 'bk_student_work', array(
         'labels' => array(
-            'name' => 'نمونه‌کار هنرجویان',
-            'singular_name' => 'نمونه‌کار',
-            'add_new' => 'افزودن نمونه‌کار',
-            'add_new_item' => 'افزودن نمونه‌کار جدید',
-            'edit_item' => 'ویرایش نمونه‌کار',
-            'new_item' => 'نمونه‌کار جدید',
-            'view_item' => 'مشاهده نمونه‌کار',
-            'search_items' => 'جستجوی نمونه‌کارها',
-            'not_found' => 'نمونه‌کاری پیدا نشد',
-            'menu_name' => 'نمونه‌کار هنرجویان',
+            'name' => 'نمونه‌کار هنرجویان', 'singular_name' => 'نمونه‌کار', 'add_new' => 'افزودن نمونه‌کار', 'add_new_item' => 'افزودن نمونه‌کار جدید',
+            'edit_item' => 'ویرایش نمونه‌کار', 'new_item' => 'نمونه‌کار جدید', 'view_item' => 'مشاهده نمونه‌کار', 'search_items' => 'جستجوی نمونه‌کارها',
+            'not_found' => 'نمونه‌کاری پیدا نشد', 'menu_name' => 'نمونه‌کار هنرجویان',
         ),
-        'public' => false,
-        'show_ui' => true,
-        'show_in_rest' => true,
-        'menu_icon' => 'dashicons-format-image',
+        'public' => false, 'show_ui' => true, 'show_in_rest' => true, 'menu_icon' => 'dashicons-format-image',
         'supports' => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
     ) );
 }
@@ -92,11 +59,7 @@ function bk_meta_input( $post_id, $key, $label, $type = 'text', $placeholder = '
     $value = get_post_meta( $post_id, $key, true );
     printf(
         '<p><label for="%1$s"><strong>%2$s</strong></label><br><input class="widefat" type="%3$s" id="%1$s" name="%1$s" value="%4$s" placeholder="%5$s"></p>',
-        esc_attr( $key ),
-        esc_html( $label ),
-        esc_attr( $type ),
-        esc_attr( $value ),
-        esc_attr( $placeholder )
+        esc_attr( $key ), esc_html( $label ), esc_attr( $type ), esc_attr( $value ), esc_attr( $placeholder )
     );
 }
 
@@ -134,35 +97,79 @@ function bk_save_content_meta( $post_id ) {
     if ( ! in_array( get_post_type( $post_id ), $post_types, true ) ) return;
 
     $fields = array(
-        '_bk_course_image' => 'esc_url_raw',
-        '_bk_course_price' => 'sanitize_text_field',
-        '_bk_course_discount' => 'sanitize_text_field',
-        '_bk_course_badge' => 'sanitize_text_field',
-        '_bk_course_url' => 'esc_url_raw',
-        '_bk_testimonial_role' => 'sanitize_text_field',
-        '_bk_testimonial_avatar' => 'esc_url_raw',
-        '_bk_testimonial_rating' => 'absint',
-        '_bk_student_work_image' => 'esc_url_raw',
-        '_bk_student_work_student' => 'sanitize_text_field',
-        '_bk_student_work_url' => 'esc_url_raw',
+        '_bk_course_image' => 'esc_url_raw', '_bk_course_price' => 'sanitize_text_field', '_bk_course_discount' => 'sanitize_text_field',
+        '_bk_course_badge' => 'sanitize_text_field', '_bk_course_url' => 'esc_url_raw', '_bk_testimonial_role' => 'sanitize_text_field',
+        '_bk_testimonial_avatar' => 'esc_url_raw', '_bk_testimonial_rating' => 'absint', '_bk_student_work_image' => 'esc_url_raw',
+        '_bk_student_work_student' => 'sanitize_text_field', '_bk_student_work_url' => 'esc_url_raw',
     );
 
     foreach ( $fields as $key => $sanitize_callback ) {
         if ( ! isset( $_POST[ $key ] ) ) continue;
         $value = call_user_func( $sanitize_callback, wp_unslash( $_POST[ $key ] ) );
-        if ( '' === $value || 0 === $value ) {
-            delete_post_meta( $post_id, $key );
-        } else {
-            update_post_meta( $post_id, $key, $value );
-        }
+        if ( '' === $value || 0 === $value ) delete_post_meta( $post_id, $key );
+        else update_post_meta( $post_id, $key, $value );
     }
 }
 
 function bk_seed_course_categories() {
     $terms = array( 'پکیج‌های آموزشی', 'دوره‌های پیشرفته', 'دوخت و طراحی', 'اکسسوری', 'کیف‌دوزی', 'تکنیک‌ها و ترفندها' );
     foreach ( $terms as $term ) {
-        if ( ! term_exists( $term, 'bk_course_category' ) ) {
-            wp_insert_term( $term, 'bk_course_category' );
+        if ( ! term_exists( $term, 'bk_course_category' ) ) wp_insert_term( $term, 'bk_course_category' );
+    }
+}
+
+function bk_seed_demo_content() {
+    bk_seed_course_categories();
+
+    $course_count = wp_count_posts( 'bk_course' );
+    if ( empty( $course_count->publish ) ) {
+        $courses = array(
+            array( 'آموزش دوخت کیف دوشی', 'آموزش کامل و پروژه‌محور برای شروع و ساخت محصول حرفه‌ای', '۲۸۰,۰۰۰ تومان', '۳۵٪', 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=80' ),
+            array( 'آموزش دوخت کیف دستی', 'از انتخاب متریال تا اجرای دوخت تمیز و حرفه‌ای', '۳۶۰,۰۰۰ تومان', '۲۰٪', 'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=700&q=80' ),
+            array( 'دوخت کیف دوشی زنانه', 'یک پروژه کاربردی برای ساخت کیف قابل فروش', '۲۴۸,۰۰۰ تومان', '۳۰٪', 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=700&q=80' ),
+            array( 'پکیج آموزش اکسسوری', 'مجموعه‌ای از تکنیک‌های ساخت اکسسوری‌های کاربردی', '۴۴۰,۰۰۰ تومان', '۲۵٪', 'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=700&q=80' ),
+        );
+        $category = get_term_by( 'name', 'کیف‌دوزی', 'bk_course_category' );
+        foreach ( $courses as $course ) {
+            $post_id = wp_insert_post( array( 'post_type' => 'bk_course', 'post_status' => 'publish', 'post_title' => $course[0], 'post_excerpt' => $course[1] ) );
+            if ( $post_id && ! is_wp_error( $post_id ) ) {
+                update_post_meta( $post_id, '_bk_course_price', $course[2] );
+                update_post_meta( $post_id, '_bk_course_discount', $course[3] );
+                update_post_meta( $post_id, '_bk_course_badge', 'ویژه' );
+                update_post_meta( $post_id, '_bk_course_image', $course[4] );
+                if ( $category && ! is_wp_error( $category ) ) wp_set_post_terms( $post_id, array( $category->term_id ), 'bk_course_category' );
+            }
+        }
+    }
+
+    if ( empty( wp_count_posts( 'bk_testimonial' )->publish ) ) {
+        $reviews = array(
+            array( 'نگار حسینی', 'بعد از این دوره به جرأت می‌تونم بگم مسیرم رو پیدا کردم و با خیال راحت شروع کردم.', 'هنرجوی دوره کیف‌دوزی' ),
+            array( 'فاطمه محمدی', 'تکنیک‌های آموزش داده شده عالی و کاربردی بود. پشتیبانی دوره هم فوق‌العاده است.', 'هنرجوی دوره دوخت' ),
+            array( 'مریم رحیمی', 'من هیچ تجربه‌ای در دوخت نداشتم اما با آموزش‌ها تونستم اولین کیف‌هام رو بسازم.', 'هنرجوی تازه‌کار' ),
+        );
+        foreach ( $reviews as $review ) {
+            $post_id = wp_insert_post( array( 'post_type' => 'bk_testimonial', 'post_status' => 'publish', 'post_title' => $review[0], 'post_content' => $review[1] ) );
+            if ( $post_id && ! is_wp_error( $post_id ) ) {
+                update_post_meta( $post_id, '_bk_testimonial_role', $review[2] );
+                update_post_meta( $post_id, '_bk_testimonial_rating', 5 );
+            }
+        }
+    }
+
+    if ( empty( wp_count_posts( 'bk_student_work' )->publish ) ) {
+        $works = array( 'نمونه‌کار کیف بنفش', 'نمونه‌کار کیف پارچه‌ای', 'نمونه‌کار کیف زرد', 'نمونه‌کار کیف کرم', 'نمونه‌کار کیف کلاسیک', 'نمونه‌کار کیف دوشی' );
+        $images = array(
+            'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=450&q=80',
+            'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=450&q=80',
+            'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=450&q=80',
+            'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=450&q=80',
+            'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=450&q=80',
+            'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=450&q=80',
+        );
+        foreach ( $works as $index => $title ) {
+            $post_id = wp_insert_post( array( 'post_type' => 'bk_student_work', 'post_status' => 'publish', 'post_title' => $title ) );
+            if ( $post_id && ! is_wp_error( $post_id ) ) update_post_meta( $post_id, '_bk_student_work_image', $images[ $index ] );
         }
     }
 }
