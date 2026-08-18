@@ -15,17 +15,20 @@
       <span><strong><?php echo esc_html( bk_setting( 'brand_name', 'باران خانومی' ) ); ?></strong><small>مهارت • خلاقیت • درآمد</small></span>
     </a>
     <nav class="bk-nav" aria-label="منوی اصلی">
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>">خانه</a>
-      <a href="#courses">دوره‌ها</a>
-      <a href="#categories">دسته‌بندی</a>
-      <a href="#mentors">نمونه‌کار هنرجویان</a>
-      <a href="#about">درباره من</a>
-      <a href="#testimonials">نظرات هنرجویان</a>
-      <a href="#contact">تماس با من</a>
+      <?php
+      wp_nav_menu( array(
+          'theme_location' => 'primary',
+          'container' => false,
+          'fallback_cb' => function() {
+              echo '<a href="' . esc_url( home_url( '/' ) ) . '">خانه</a><a href="#courses">دوره‌ها</a><a href="#categories">دسته‌بندی</a><a href="#mentors">نمونه‌کار هنرجویان</a><a href="#about">درباره من</a><a href="#testimonials">نظرات هنرجویان</a><a href="#contact">تماس با من</a>';
+          },
+          'items_wrap' => '%3$s',
+      ) );
+      ?>
     </nav>
     <div class="bk-header-actions">
-      <button class="bk-search" type="button"><span><?php echo bk_icon( 'search' ); ?></span><em>جستجوی دوره...</em></button>
-      <button class="bk-login bk-open-auth" type="button" data-bk-open-auth><span>♙</span> ورود / ثبت‌نام</button>
+      <button class="bk-search" type="button"><span><?php echo bk_icon( 'search' ); ?></span><em><?php echo esc_html( bk_setting( 'search_placeholder', 'جستجوی دوره...' ) ); ?></em></button>
+      <button class="bk-login bk-open-auth" type="button" data-bk-open-auth><span>♙</span> <?php echo esc_html( bk_setting( 'login_label', 'ورود / ثبت‌نام' ) ); ?></button>
     </div>
   </div>
 </header>
