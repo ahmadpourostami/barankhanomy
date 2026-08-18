@@ -20,16 +20,20 @@ require_once BK_CORE_DIR . 'includes/shortcodes.php';
 register_activation_hook( __FILE__, 'bk_core_activate' );
 function bk_core_activate() {
     $defaults = bk_core_defaults();
-    if ( false === get_option( 'bk_core_settings', false ) ) {
-        add_option( 'bk_core_settings', $defaults );
-    }
+    if ( false === get_option( 'bk_core_settings', false ) ) add_option( 'bk_core_settings', $defaults );
 
-    if ( function_exists( 'bk_register_content_types' ) ) {
-        bk_register_content_types();
-    }
-    if ( function_exists( 'bk_seed_course_categories' ) ) {
-        bk_seed_course_categories();
-    }
+    if ( function_exists( 'bk_register_content_types' ) ) bk_register_content_types();
+    if ( function_exists( 'bk_seed_demo_content' ) ) bk_seed_demo_content();
+    update_option( 'bk_core_schema_version', BK_CORE_VERSION );
+    flush_rewrite_rules();
+}
+
+add_action( 'admin_init', 'bk_core_maybe_upgrade' );
+function bk_core_maybe_upgrade() {
+    $version = get_option( 'bk_core_schema_version', '0' );
+    if ( version_compare( $version, BK_CORE_VERSION, '>=' ) ) return;
+    if ( function_exists( 'bk_seed_demo_content' ) ) bk_seed_demo_content();
+    update_option( 'bk_core_schema_version', BK_CORE_VERSION );
     flush_rewrite_rules();
 }
 
