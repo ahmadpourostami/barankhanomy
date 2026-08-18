@@ -11,8 +11,8 @@
   <div class="bk-container bk-header-inner">
     <button class="bk-mobile-menu" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button>
     <a class="bk-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-      <?php if ( has_custom_logo() ) : ?>
-        <span class="bk-custom-logo"><?php echo wp_kses_post( get_custom_logo() ); ?></span>
+      <?php $custom_logo_id = (int) get_theme_mod( 'custom_logo' ); if ( $custom_logo_id ) : ?>
+        <span class="bk-custom-logo"><?php echo wp_get_attachment_image( $custom_logo_id, 'full', false, array( 'class' => 'custom-logo', 'alt' => get_bloginfo( 'name' ) ) ); ?></span>
       <?php else : ?>
         <span class="bk-logo-mark">ب</span>
       <?php endif; ?>
