@@ -16,33 +16,22 @@
 </section>
 
 <section class="bk-benefits"><div class="bk-container bk-benefits-grid">
-  <div><span class="bk-benefit-icon">□</span><strong>دسترسی دائمی</strong><small>به تمام دوره‌ها</small></div>
-  <div><span class="bk-benefit-icon">▷</span><strong>آموزش‌های کاربردی</strong><small>پروژه‌محور و درآمدزا</small></div>
-  <div><span class="bk-benefit-icon">♧</span><strong>پشتیبانی و همراهی</strong><small>در تمام مسیر یادگیری</small></div>
+  <div><span class="bk-benefit-icon">□</span><strong><?php echo esc_html( bk_setting( 'benefit_1_title', 'دسترسی دائمی' ) ); ?></strong><small><?php echo esc_html( bk_setting( 'benefit_1_text', 'به تمام دوره‌ها' ) ); ?></small></div>
+  <div><span class="bk-benefit-icon">▷</span><strong><?php echo esc_html( bk_setting( 'benefit_2_title', 'آموزش‌های کاربردی' ) ); ?></strong><small><?php echo esc_html( bk_setting( 'benefit_2_text', 'پروژه‌محور و درآمدزا' ) ); ?></small></div>
+  <div><span class="bk-benefit-icon">♧</span><strong><?php echo esc_html( bk_setting( 'benefit_3_title', 'پشتیبانی و همراهی' ) ); ?></strong><small><?php echo esc_html( bk_setting( 'benefit_3_text', 'در تمام مسیر یادگیری' ) ); ?></small></div>
 </div></section>
 
 <section class="bk-section" id="categories"><div class="bk-container">
   <div class="bk-section-head"><div><span>دسته‌بندی دوره‌ها</span><h2>مهارتت رو انتخاب کن</h2></div><a href="#courses">مشاهده همه ←</a></div>
   <div class="bk-category-grid">
     <?php
-    $categories = get_terms( array(
-      'taxonomy' => 'bk_course_category',
-      'hide_empty' => false,
-      'number' => 6,
-      'orderby' => 'term_id',
-      'order' => 'ASC',
-    ) );
+    $categories = get_terms( array( 'taxonomy' => 'bk_course_category', 'hide_empty' => false, 'number' => 6, 'orderby' => 'term_id', 'order' => 'ASC' ) );
     if ( ! is_wp_error( $categories ) ) :
       foreach ( $categories as $category ) :
     ?>
-      <a href="<?php echo esc_url( get_term_link( $category ) ); ?>" class="bk-category">
-        <span><?php echo bk_icon( 'gift' ); ?></span>
-        <strong><?php echo esc_html( $category->name ); ?></strong>
-      </a>
+      <a href="<?php echo esc_url( get_term_link( $category ) ); ?>" class="bk-category"><span><?php echo bk_icon( 'gift' ); ?></span><strong><?php echo esc_html( $category->name ); ?></strong></a>
     <?php endforeach; endif; ?>
-    <a href="<?php echo esc_url( get_post_type_archive_link( 'bk_course' ) ); ?>" class="bk-category">
-      <span><?php echo bk_icon( 'grid' ); ?></span><strong>همه دوره‌ها</strong>
-    </a>
+    <a href="<?php echo esc_url( get_post_type_archive_link( 'bk_course' ) ); ?>" class="bk-category"><span><?php echo bk_icon( 'grid' ); ?></span><strong>همه دوره‌ها</strong></a>
   </div>
 </div></section>
 
@@ -50,13 +39,7 @@
   <div class="bk-section-title"><span>پیشنهادهای منتخب</span><h2>دوره‌های منتخب</h2></div>
   <div class="bk-course-grid">
     <?php
-    $courses = new WP_Query( array(
-      'post_type' => 'bk_course',
-      'post_status' => 'publish',
-      'posts_per_page' => 4,
-      'orderby' => 'menu_order date',
-      'order' => 'DESC',
-    ) );
+    $courses = new WP_Query( array( 'post_type' => 'bk_course', 'post_status' => 'publish', 'posts_per_page' => 4, 'orderby' => 'menu_order date', 'order' => 'DESC' ) );
     if ( $courses->have_posts() ) :
       while ( $courses->have_posts() ) : $courses->the_post();
         $course_image = get_post_meta( get_the_ID(), '_bk_course_image', true );
@@ -119,10 +102,10 @@
       </a>
     <?php endwhile; wp_reset_postdata(); endif; ?>
   </div>
-  <div class="bk-center"><a class="bk-btn bk-btn-outline" href="<?php echo esc_url( get_post_type_archive_link( 'bk_course' ) ); ?>">مشاهده بیشتر ←</a></div>
+  <div class="bk-center"><a class="bk-btn bk-btn-outline" href="<?php echo esc_url( get_post_type_archive_link( 'bk_student_work' ) ); ?>">مشاهده بیشتر ←</a></div>
 </div></section>
 
-<section class="bk-testimonials" id="blog"><div class="bk-container">
+<section class="bk-testimonials" id="testimonials"><div class="bk-container">
   <div class="bk-section-title"><span>تجربه هنرجویان</span><h2>هنرجویان من چه می‌گویند؟</h2></div>
   <div class="bk-testimonial-grid">
     <?php
@@ -131,8 +114,7 @@
       while ( $reviews->have_posts() ) : $reviews->the_post();
         $role = get_post_meta( get_the_ID(), '_bk_testimonial_role', true );
         $avatar = get_post_meta( get_the_ID(), '_bk_testimonial_avatar', true );
-        $rating = (int) get_post_meta( get_the_ID(), '_bk_testimonial_rating', true );
-        $rating = max( 0, min( 5, $rating ) );
+        $rating = max( 0, min( 5, (int) get_post_meta( get_the_ID(), '_bk_testimonial_rating', true ) ) );
     ?>
       <article class="bk-review">
         <div class="bk-review-head">
