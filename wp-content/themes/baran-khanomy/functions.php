@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BK_THEME_VERSION', '0.1.2' );
+define( 'BK_THEME_VERSION', '0.1.3' );
 define( 'BK_THEME_DIR', get_template_directory() );
 define( 'BK_THEME_URI', get_template_directory_uri() );
 
@@ -12,6 +12,19 @@ add_action( 'after_setup_theme', function() {
     add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
     add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 180, 'flex-height' => true, 'flex-width' => true ) );
     register_nav_menus( array( 'primary' => 'منوی اصلی' ) );
+});
+
+add_action( 'customize_register', function( $wp_customize ) {
+    $wp_customize->add_section( 'bk_header_settings', array( 'title' => 'باران خانومی - سربرگ', 'priority' => 30 ) );
+    $controls = array(
+        'bk_header_tagline' => array( 'مهارت • خلاقیت • درآمد', 'زیرعنوان لوگو' ),
+        'bk_search_placeholder' => array( 'جستجوی دوره...', 'متن جستجو' ),
+        'bk_login_label' => array( 'ورود / ثبت‌نام', 'متن دکمه ورود' ),
+    );
+    foreach ( $controls as $setting => $data ) {
+        $wp_customize->add_setting( $setting, array( 'default' => $data[0], 'sanitize_callback' => 'sanitize_text_field' ) );
+        $wp_customize->add_control( $setting, array( 'label' => $data[1], 'section' => 'bk_header_settings', 'type' => 'text' ) );
+    }
 });
 
 add_action( 'wp_enqueue_scripts', function() {
@@ -30,9 +43,7 @@ function bk_setting( $key, $fallback = '' ) {
 }
 
 function bk_icon( $name ) {
-    $icons = array(
-        'grid' => '▦', 'bag' => '♧', 'gift' => '◇', 'award' => '✦', 'calendar' => '□', 'play' => '▷', 'headset' => '♧', 'heart' => '♡', 'arrow' => '←', 'menu' => '☰', 'search' => '⌕',
-    );
+    $icons = array( 'grid' => '▦', 'bag' => '♧', 'gift' => '◇', 'award' => '✦', 'calendar' => '□', 'play' => '▷', 'headset' => '♧', 'heart' => '♡', 'arrow' => '←', 'menu' => '☰', 'search' => '⌕' );
     return isset( $icons[ $name ] ) ? $icons[ $name ] : '•';
 }
 
