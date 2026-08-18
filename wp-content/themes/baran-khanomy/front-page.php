@@ -22,16 +22,23 @@
 </div></section>
 
 <section class="bk-section" id="categories"><div class="bk-container">
-  <div class="bk-section-head"><div><span>دسته‌بندی دوره‌ها</span><h2>مهارتت رو انتخاب کن</h2></div><a href="#courses">مشاهده همه ←</a></div>
+  <div class="bk-section-head"><div><span>دسته‌بندی دوره‌ها</span><h2>مهارتت رو انتخاب کن</h2></div>
+    <?php if ( bk_tutor_is_active() ) : ?><a href="<?php echo esc_url( tutor_utils()->course_archive_page_url() ); ?>">مشاهده همه ←</a><?php endif; ?>
+  </div>
   <div class="bk-category-grid">
     <?php
-    $categories = get_terms( array( 'taxonomy' => 'bk_course_category', 'hide_empty' => false, 'number' => 6, 'orderby' => 'term_id', 'order' => 'ASC' ) );
-    if ( ! is_wp_error( $categories ) ) :
-      foreach ( $categories as $category ) :
+    if ( bk_tutor_is_active() && taxonomy_exists( 'course-category' ) ) :
+        $categories = get_terms( array( 'taxonomy' => 'course-category', 'hide_empty' => true, 'number' => 6, 'orderby' => 'term_id', 'order' => 'ASC' ) );
+        if ( ! is_wp_error( $categories ) && $categories ) :
+            foreach ( $categories as $category ) :
     ?>
       <a href="<?php echo esc_url( get_term_link( $category ) ); ?>" class="bk-category"><span><?php echo bk_icon( 'gift' ); ?></span><strong><?php echo esc_html( $category->name ); ?></strong></a>
-    <?php endforeach; endif; ?>
-    <a href="<?php echo esc_url( get_post_type_archive_link( 'bk_course' ) ); ?>" class="bk-category"><span><?php echo bk_icon( 'grid' ); ?></span><strong>همه دوره‌ها</strong></a>
+    <?php
+            endforeach;
+        endif;
+    endif;
+    ?>
+    <?php if ( bk_tutor_is_active() ) : ?><a href="<?php echo esc_url( tutor_utils()->course_archive_page_url() ); ?>" class="bk-category"><span><?php echo bk_icon( 'grid' ); ?></span><strong>همه دوره‌ها</strong></a><?php endif; ?>
   </div>
 </div></section>
 
@@ -39,35 +46,55 @@
   <div class="bk-section-title"><span>پیشنهادهای منتخب</span><h2>دوره‌های منتخب</h2></div>
   <div class="bk-course-grid">
     <?php
-    $courses = new WP_Query( array( 'post_type' => 'bk_course', 'post_status' => 'publish', 'posts_per_page' => 4, 'orderby' => 'menu_order date', 'order' => 'DESC' ) );
-    if ( $courses->have_posts() ) :
-      while ( $courses->have_posts() ) : $courses->the_post();
-        $course_image = get_post_meta( get_the_ID(), '_bk_course_image', true );
-        $course_price = get_post_meta( get_the_ID(), '_bk_course_price', true );
-        $course_discount = get_post_meta( get_the_ID(), '_bk_course_discount', true );
-        $course_badge = get_post_meta( get_the_ID(), '_bk_course_badge', true );
-        $course_url = get_post_meta( get_the_ID(), '_bk_course_url', true );
-        $course_url = $course_url ? $course_url : get_permalink();
-        $course_image = $course_image ? $course_image : get_the_post_thumbnail_url( get_the_ID(), 'large' );
+    if ( ! bk_tutor_is_active() ) :
+    ?>
+      <div class="bk-empty-state"><strong>افزونه Tutor LMS فعال نیست.</strong><p>برای نمایش دوره‌ها، Tutor LMS را نصب و فعال کنید.</p></div>
+    <?php
+    else :
+        $tutor_course_post_type = tutor()->course_post_type;
+        $courses = new WP_Query( array(
+            'post_type' => $tutor_course_post_type,
+            'post_status' => 'publish',
+            'posts_per_page' => 4,
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'no_found_rows' => true,
+        ) );
+
+        if ( $courses->have_posts() ) :
+            while ( $courses->have_posts() ) : $courses->the_post();
+                $course_id = get_the_ID();
+                $course_image = get_the_post_thumbnail_url( $course_id, 'large' );
+                $course_discount = bk_tutor_course_discount( $course_id );
+                $course_url = get_permalink( $course_id );
     ?>
       <article class="bk-course-card">
-        <div class="bk-course-image">
-          <?php if ( $course_image ) : ?><img src="<?php echo esc_url( $course_image ); ?>" alt="<?php the_title_attribute(); ?>"><?php endif; ?>
+        <a class="bk-course-image" href="<?php echo esc_url( $course_url ); ?>">
+          <?php if ( $course_image ) : ?><img src="<?php echo esc_url( $course_image ); ?>" alt="<?php the_title_attribute(); ?>"><?php else : ?><div class="bk-course-placeholder"></div><?php endif; ?>
           <?php if ( $course_discount ) : ?><span class="bk-discount"><?php echo esc_html( $course_discount ); ?></span><?php endif; ?>
-        </div>
+        </a>
         <div class="bk-course-body">
-          <?php if ( $course_badge ) : ?><span class="bk-course-tag"><?php echo esc_html( $course_badge ); ?></span><?php endif; ?>
-          <h3><?php the_title(); ?></h3>
-          <p><?php echo esc_html( get_the_excerpt() ); ?></p>
-          <?php if ( $course_price ) : ?><strong><?php echo esc_html( $course_price ); ?></strong><?php endif; ?>
+          <?php
+          $course_terms = get_the_terms( $course_id, 'course-category' );
+          if ( $course_terms && ! is_wp_error( $course_terms ) ) :
+          ?>
+            <span class="bk-course-tag"><?php echo esc_html( $course_terms[0]->name ); ?></span>
+          <?php endif; ?>
+          <h3><a href="<?php echo esc_url( $course_url ); ?>"><?php the_title(); ?></a></h3>
+          <p><?php echo esc_html( wp_trim_words( get_the_excerpt(), 16 ) ); ?></p>
+          <div class="bk-course-price"><?php echo bk_tutor_course_price( $course_id ); ?></div>
           <a href="<?php echo esc_url( $course_url ); ?>" class="bk-course-link">مشاهده دوره <span>←</span></a>
         </div>
       </article>
-    <?php endwhile; wp_reset_postdata(); else : ?>
-      <p>هنوز دوره‌ای ثبت نشده است.</p>
-    <?php endif; ?>
+    <?php
+            endwhile;
+            wp_reset_postdata();
+        else :
+    ?>
+      <div class="bk-empty-state"><strong>هنوز دوره‌ای منتشر نشده است.</strong><p>دوره‌ها را از بخش Tutor LMS → Courses ایجاد کنید.</p></div>
+    <?php endif; endif; ?>
   </div>
-  <div class="bk-dots"><i></i><i class="active"></i><i></i><i></i><i></i></div>
+  <?php if ( bk_tutor_is_active() ) : ?><div class="bk-center"><a class="bk-btn bk-btn-outline" href="<?php echo esc_url( tutor_utils()->course_archive_page_url() ); ?>">مشاهده همه دوره‌ها ←</a></div><?php endif; ?>
 </div></section>
 
 <section class="bk-about" id="about"><div class="bk-container bk-about-card">
@@ -92,13 +119,12 @@
     $works = new WP_Query( array( 'post_type' => 'bk_student_work', 'post_status' => 'publish', 'posts_per_page' => 6, 'orderby' => 'menu_order date', 'order' => 'DESC' ) );
     if ( $works->have_posts() ) :
       while ( $works->have_posts() ) : $works->the_post();
-        $work_image = get_post_meta( get_the_ID(), '_bk_student_work_image', true );
         $work_url = get_post_meta( get_the_ID(), '_bk_student_work_url', true );
         $work_url = $work_url ? $work_url : get_permalink();
-        if ( ! $work_image ) $work_image = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
+        $work_image = get_the_post_thumbnail_url( get_the_ID(), 'medium' );
     ?>
       <a class="bk-work" href="<?php echo esc_url( $work_url ); ?>" aria-label="<?php the_title_attribute(); ?>">
-        <?php if ( $work_image ) : ?><img src="<?php echo esc_url( $work_image ); ?>" alt="<?php the_title_attribute(); ?>"><?php endif; ?>
+        <?php if ( $work_image ) : ?><img src="<?php echo esc_url( $work_image ); ?>" alt="<?php the_title_attribute(); ?>"><?php else : ?><span><?php the_title(); ?></span><?php endif; ?>
       </a>
     <?php endwhile; wp_reset_postdata(); endif; ?>
   </div>
