@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BK_THEME_VERSION', '0.1.1' );
+define( 'BK_THEME_VERSION', '0.1.2' );
 define( 'BK_THEME_DIR', get_template_directory() );
 define( 'BK_THEME_URI', get_template_directory_uri() );
 
@@ -17,6 +17,7 @@ add_action( 'after_setup_theme', function() {
 add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_style( 'bk-font', 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap', array(), null );
     wp_enqueue_style( 'bk-main', BK_THEME_URI . '/assets/css/main.css', array(), BK_THEME_VERSION );
+    wp_enqueue_style( 'bk-home', BK_THEME_URI . '/assets/css/home.css', array( 'bk-main' ), BK_THEME_VERSION );
     wp_enqueue_script( 'bk-main', BK_THEME_URI . '/assets/js/main.js', array(), BK_THEME_VERSION, true );
 });
 
@@ -35,30 +36,18 @@ function bk_icon( $name ) {
     return isset( $icons[ $name ] ) ? $icons[ $name ] : '•';
 }
 
-/**
- * Returns Tutor LMS course price HTML for the current course.
- * The theme never reads or writes course pricing as its own content model.
- */
 function bk_tutor_course_price( $course_id = 0 ) {
     if ( ! $course_id ) $course_id = get_the_ID();
     if ( ! function_exists( 'tutor_utils' ) ) return '';
-
     $price = tutor_utils()->get_course_price( $course_id );
     if ( null === $price || '' === $price ) return 'رایگان';
-
     return wp_kses_post( $price );
 }
 
-/**
- * Calculate a visual discount badge from Tutor LMS native course price meta.
- * This is presentation-only; Tutor LMS remains the source of truth.
- */
 function bk_tutor_course_discount( $course_id = 0 ) {
     if ( ! $course_id ) $course_id = get_the_ID();
-
     $regular = (float) get_post_meta( $course_id, 'tutor_course_price', true );
-    $sale    = (float) get_post_meta( $course_id, 'tutor_course_sale_price', true );
-
+    $sale = (float) get_post_meta( $course_id, 'tutor_course_sale_price', true );
     if ( $regular <= 0 || $sale <= 0 || $sale >= $regular ) return '';
     return (string) round( ( ( $regular - $sale ) / $regular ) * 100 ) . '%';
 }
