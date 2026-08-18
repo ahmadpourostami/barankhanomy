@@ -17,6 +17,15 @@ require_once BK_CORE_DIR . 'includes/settings.php';
 require_once BK_CORE_DIR . 'includes/content-types.php';
 require_once BK_CORE_DIR . 'includes/shortcodes.php';
 
+add_filter( 'register_post_type_args', function( $args, $post_type ) {
+    if ( 'bk_student_work' !== $post_type ) return $args;
+    $args['public'] = true;
+    $args['show_ui'] = true;
+    $args['has_archive'] = true;
+    $args['rewrite'] = array( 'slug' => 'student-works' );
+    return $args;
+}, 10, 2 );
+
 register_activation_hook( __FILE__, 'bk_core_activate' );
 function bk_core_activate() {
     $defaults = bk_core_defaults();
