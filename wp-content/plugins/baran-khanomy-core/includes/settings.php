@@ -15,13 +15,18 @@ function bk_core_defaults() {
         'stat_courses' => '+۴۰',
         'stat_students' => '+۳۵۰۰',
         'stat_experience' => '+۸',
-        'footer_cta' => 'آماده‌ای مسیر جدیدی رو شروع کنی؟',
         'benefit_1_title' => 'دسترسی دائمی',
         'benefit_1_text' => 'به تمام دوره‌ها',
         'benefit_2_title' => 'آموزش‌های کاربردی',
         'benefit_2_text' => 'پروژه‌محور و درآمدزا',
         'benefit_3_title' => 'پشتیبانی و همراهی',
         'benefit_3_text' => 'در تمام مسیر یادگیری',
+        'footer_cta' => 'آماده‌ای مسیر جدیدی رو شروع کنی؟',
+        'footer_description' => 'اولین قدم، انتخاب دوره‌ای است که تو را به درآمد نزدیک‌تر می‌کند.',
+        'phone' => '۰۹۰۰ ۰۰۰ ۰۰۰۰',
+        'email' => 'barankhanomy@gmail.com',
+        'footer_brand_text' => 'مهارت، خلاقیت و ساختن یک مسیر درآمدی واقعی.',
+        'copyright' => 'تمامی حقوق این سایت متعلق به باران خانومی است.',
     );
 }
 
@@ -60,31 +65,19 @@ function bk_core_settings_page() {
             <table class="form-table" role="presentation">
                 <?php
                 $fields = array(
-                    'brand_name' => 'نام برند',
-                    'hero_badge' => 'برچسب هیرو',
-                    'hero_title' => 'عنوان هیرو (HTML ساده مجاز)',
-                    'hero_text' => 'توضیح هیرو',
-                    'hero_primary' => 'دکمه اصلی',
-                    'hero_secondary' => 'دکمه دوم',
-                    'hero_image' => 'آدرس تصویر هیرو',
-                    'about_title' => 'عنوان معرفی',
-                    'about_text' => 'متن معرفی',
-                    'stat_courses' => 'آمار آموزش‌ها',
-                    'stat_students' => 'آمار هنرجویان',
-                    'stat_experience' => 'آمار سابقه',
-                    'benefit_1_title' => 'مزیت اول - عنوان',
-                    'benefit_1_text' => 'مزیت اول - توضیح',
-                    'benefit_2_title' => 'مزیت دوم - عنوان',
-                    'benefit_2_text' => 'مزیت دوم - توضیح',
-                    'benefit_3_title' => 'مزیت سوم - عنوان',
-                    'benefit_3_text' => 'مزیت سوم - توضیح',
-                    'footer_cta' => 'عنوان CTA پایین صفحه',
+                    'brand_name' => 'نام برند', 'hero_badge' => 'برچسب هیرو', 'hero_title' => 'عنوان هیرو (HTML ساده مجاز)', 'hero_text' => 'توضیح هیرو',
+                    'hero_primary' => 'دکمه اصلی', 'hero_secondary' => 'دکمه دوم', 'hero_image' => 'آدرس تصویر هیرو',
+                    'about_title' => 'عنوان معرفی', 'about_text' => 'متن معرفی', 'stat_courses' => 'آمار آموزش‌ها', 'stat_students' => 'آمار هنرجویان',
+                    'stat_experience' => 'آمار سابقه', 'benefit_1_title' => 'مزیت اول - عنوان', 'benefit_1_text' => 'مزیت اول - توضیح',
+                    'benefit_2_title' => 'مزیت دوم - عنوان', 'benefit_2_text' => 'مزیت دوم - توضیح', 'benefit_3_title' => 'مزیت سوم - عنوان',
+                    'benefit_3_text' => 'مزیت سوم - توضیح', 'footer_cta' => 'عنوان CTA پایین صفحه', 'footer_description' => 'توضیح CTA پایین صفحه',
+                    'phone' => 'شماره تماس', 'email' => 'ایمیل', 'footer_brand_text' => 'توضیح برند در فوتر', 'copyright' => 'متن کپی‌رایت',
                 );
                 foreach ( $fields as $key => $label ) : ?>
                     <tr>
                         <th scope="row"><label for="bk-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?></label></th>
                         <td>
-                            <?php if ( in_array( $key, array( 'hero_text', 'about_text' ), true ) ) : ?>
+                            <?php if ( in_array( $key, array( 'hero_text', 'about_text', 'footer_description', 'footer_brand_text' ), true ) ) : ?>
                                 <textarea class="large-text" rows="4" id="bk-<?php echo esc_attr( $key ); ?>" name="bk_core_settings[<?php echo esc_attr( $key ); ?>]"><?php echo esc_textarea( $settings[ $key ] ); ?></textarea>
                             <?php else : ?>
                                 <input class="regular-text" type="text" id="bk-<?php echo esc_attr( $key ); ?>" name="bk_core_settings[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $settings[ $key ] ); ?>">
