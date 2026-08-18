@@ -1,8 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BK_THEME_VERSION', '0.1.0' );
-
+define( 'BK_THEME_VERSION', '0.1.1' );
 define( 'BK_THEME_DIR', get_template_directory() );
 define( 'BK_THEME_URI', get_template_directory_uri() );
 
@@ -34,4 +33,36 @@ function bk_icon( $name ) {
         'grid' => '▦', 'bag' => '♧', 'gift' => '◇', 'award' => '✦', 'calendar' => '□', 'play' => '▷', 'headset' => '♧', 'heart' => '♡', 'arrow' => '←', 'menu' => '☰', 'search' => '⌕',
     );
     return isset( $icons[ $name ] ) ? $icons[ $name ] : '•';
+}
+
+/**
+ * Returns Tutor LMS course price HTML for the current course.
+ * The theme never reads or writes course pricing as its own content model.
+ */
+function bk_tutor_course_price( $course_id = 0 ) {
+    if ( ! $course_id ) $course_id = get_the_ID();
+    if ( ! function_exists( 'tutor_utils' ) ) return '';
+
+    $price = tutor_utils()->get_course_price( $course_id );
+    if ( null === $price || '' === $price ) return 'رایگان';
+
+    return wp_kses_post( $price );
+}
+
+/**
+ * Calculate a visual discount badge from Tutor LMS native course price meta.
+ * This is presentation-only; Tutor LMS remains the source of truth.
+ */
+function bk_tutor_course_discount( $course_id = 0 ) {
+    if ( ! $course_id ) $course_id = get_the_ID();
+
+    $regular = (float) get_post_meta( $course_id, 'tutor_course_price', true );
+    $sale    = (float) get_post_meta( $course_id, 'tutor_course_sale_price', true );
+
+    if ( $regular <= 0 || $sale <= 0 || $sale >= $regular ) return '';
+    return (string) round( ( ( $regular - $sale ) / $regular ) * 100 ) . '%';
+}
+
+function bk_tutor_is_active() {
+    return function_exists( 'tutor_utils' ) && function_exists( 'tutor' );
 }
