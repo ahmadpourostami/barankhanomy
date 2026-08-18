@@ -1,0 +1,22 @@
+{
+  "apiVersion": 3,
+  "name": "baran-khanomy/tutor-course-grid",
+  "title": "گرید دوره‌های Tutor LMS",
+  "category": "widgets",
+  "icon": "grid-view",
+  "description": "نمایش دوره‌های جدید Tutor LMS با کارت اختصاصی باران خانومی.",
+  "textdomain": "baran-khanomy-core",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "postsPerPage": { "type": "number", "default": 4 },
+    "columns": { "type": "number", "default": 4 },
+    "category": { "type": "string", "default": "" },
+    "title": { "type": "string", "default": "جدیدترین دوره‌ها" },
+    "showTitle": { "type": "boolean", "default": true },
+    "showDots": { "type": "boolean", "default": false },
+    "showMoreButton": { "type": "boolean", "default": false },
+    "moreButtonText": { "type": "string", "default": "مشاهده همه دوره‌ها ←" }
+  }
+}
