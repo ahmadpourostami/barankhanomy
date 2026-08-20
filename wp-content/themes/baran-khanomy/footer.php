@@ -1,13 +1,3 @@
-<style>
-.bk-section-title,.bk-section-head{direction:rtl;text-align:right}
-.bk-section-title>div,.bk-section-head>div{direction:rtl;text-align:right;margin-left:auto;margin-right:0}
-.bk-section-title h2,.bk-section-head h2{text-align:right}
-.bk-footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid #eee7f0;padding-top:15px;direction:rtl}
-.bk-footer-bottom .bk-copyright{border:0;padding:0;margin:0;text-align:right}
-.bk-footer-bottom .bk-designer-signature{border:0;padding:0;margin:0;text-align:left}
-.bk-footer-bottom .bk-designer-signature a{color:var(--bk-purple);font-weight:600}
-@media(max-width:760px){.bk-footer-bottom{flex-direction:column;align-items:center;text-align:center;gap:6px}.bk-footer-bottom .bk-copyright,.bk-footer-bottom .bk-designer-signature{text-align:center}}
-</style>
 <footer class="bk-footer" id="contact">
   <div class="bk-container">
     <section class="bk-footer-cta">
@@ -16,9 +6,20 @@
       <div class="bk-footer-illustration">✧</div>
     </section>
     <div class="bk-footer-grid">
-      <div><h3>دسترسی سریع</h3><a href="<?php echo esc_url( home_url( '/' ) ); ?>">خانه</a><a href="#courses">دوره‌ها</a><a href="#mentors">نمونه‌کار هنرجویان</a><a href="#testimonials">نظرات هنرجویان</a></div>
+      <div class="bk-footer-links">
+        <h3>دسترسی سریع</h3>
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>">خانه</a>
+        <a href="#courses">دوره‌ها</a>
+        <a href="#mentors">نمونه‌کار هنرجویان</a>
+        <a href="#testimonials">نظرات هنرجویان</a>
+        <div class="bk-socials" aria-label="شبکه‌های اجتماعی">
+          <?php if ( bk_social_get( 'instagram' ) ) : ?><a href="<?php echo esc_url( bk_social_get( 'instagram' ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="اینستاگرام">◎</a><?php endif; ?>
+          <?php if ( bk_social_get( 'telegram' ) ) : ?><a href="<?php echo esc_url( bk_social_get( 'telegram' ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="تلگرام">✈</a><?php endif; ?>
+          <?php if ( bk_social_get( 'whatsapp' ) ) : ?><a href="<?php echo esc_url( bk_social_get( 'whatsapp' ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="واتساپ">◌</a><?php endif; ?>
+        </div>
+      </div>
       <div><h3>راهنما</h3><a href="#">سوالات متداول</a><a href="#">شرایط استفاده</a><a href="#">حریم خصوصی</a><a href="#">قوانین و مقررات</a></div>
-      <div><h3>ارتباط با من</h3><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', bk_setting( 'phone', '09000000000' ) ) ); ?>"><?php echo esc_html( bk_setting( 'phone', '۰۹۰۰ ۰۰۰ ۰۰۰۰' ) ); ?></a><a href="mailto:<?php echo esc_attr( bk_setting( 'email', 'barankhanomy@gmail.com' ) ); ?>"><?php echo esc_html( bk_setting( 'email', 'barankhanomy@gmail.com' ) ); ?></a><div class="bk-socials"><span>◎</span><span>◌</span><span>✈</span></div></div>
+      <div><h3>ارتباط با من</h3><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', bk_setting( 'phone', '09000000000' ) ) ); ?>"><?php echo esc_html( bk_setting( 'phone', '۰۹۰۰ ۰۰۰ ۰۰۰۰' ) ); ?></a><a href="mailto:<?php echo esc_attr( bk_setting( 'email', 'barankhanomy@gmail.com' ) ); ?>"><?php echo esc_html( bk_setting( 'email', 'barankhanomy@gmail.com' ) ); ?></a></div>
       <div class="bk-footer-brand"><div class="bk-logo-mark">ب</div><strong><?php echo esc_html( bk_setting( 'brand_name', 'باران خانومی' ) ); ?></strong><p><?php echo esc_html( bk_setting( 'footer_brand_text', 'مهارت، خلاقیت و ساختن یک مسیر درآمدی واقعی.' ) ); ?></p></div>
     </div>
     <div class="bk-footer-bottom">
