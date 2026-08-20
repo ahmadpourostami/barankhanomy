@@ -13,7 +13,6 @@ add_action( 'after_setup_theme', function() {
     register_nav_menus( array( 'primary' => 'منوی اصلی' ) );
 } );
 
-/** Footer columns are managed from Appearance > Widgets. */
 add_action( 'widgets_init', function() {
     $areas = array(
         'footer_col_1' => 'فوتر - ستون ۱ (سمت راست)',
@@ -46,6 +45,7 @@ add_action( 'customize_register', function( $wp_customize ) {
 add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_style( 'bk-main', BK_THEME_URI . '/assets/css/main.css', array(), BK_THEME_VERSION );
     wp_enqueue_style( 'bk-home', BK_THEME_URI . '/assets/css/home.css', array( 'bk-main' ), BK_THEME_VERSION );
+    wp_enqueue_style( 'bk-footer', BK_THEME_URI . '/assets/css/footer.css', array( 'bk-main' ), BK_THEME_VERSION );
     $font_css = sprintf( ':root{--bk-font-hero-title:%spx;--bk-font-benefit-title:%spx;--bk-font-benefit-text:%spx;--bk-font-categories-title:%spx;--bk-font-courses-title:%spx;--bk-font-course-title:%spx;--bk-font-about-title:%spx;--bk-font-works-title:%spx;--bk-font-testimonials-title:%spx;--bk-font-footer-title:%spx;--bk-font-footer-text:%spx;--bk-font-signature:%spx}.bk-hero h1{font-size:var(--bk-font-hero-title)}.bk-benefits strong{font-size:var(--bk-font-benefit-title)}.bk-benefits small{font-size:var(--bk-font-benefit-text)}.bk-section-head h2,.bk-section-title h2{font-size:var(--bk-font-categories-title)}.bk-course-body h3{font-size:var(--bk-font-course-title)}.bk-about-copy h2{font-size:var(--bk-font-about-title)}.bk-footer-cta h2,.bk-footer-grid h3,.bk-footer-grid .widget-title{font-size:var(--bk-font-footer-title)}.bk-footer-cta p,.bk-footer-grid a,.bk-footer-grid p,.bk-footer-grid .widget{font-size:var(--bk-font-footer-text)}.bk-designer-signature{font-size:var(--bk-font-signature);text-align:left;border:0;margin:0;padding:0;color:#a094a6;line-height:1.8}.bk-designer-signature a{font-size:inherit;color:var(--bk-purple);font-weight:600}.bk-designer-signature span{font-size:inherit}', esc_attr( bk_setting( 'font_hero_title', '42' ) ), esc_attr( bk_setting( 'font_benefit_title', '12' ) ), esc_attr( bk_setting( 'font_benefit_text', '10' ) ), esc_attr( bk_setting( 'font_categories_title', '25' ) ), esc_attr( bk_setting( 'font_courses_title', '25' ) ), esc_attr( bk_setting( 'font_course_title', '13' ) ), esc_attr( bk_setting( 'font_about_title', '24' ) ), esc_attr( bk_setting( 'font_works_title', '25' ) ), esc_attr( bk_setting( 'font_testimonials_title', '25' ) ), esc_attr( bk_setting( 'font_footer_title', '20' ) ), esc_attr( bk_setting( 'font_footer_text', '10' ) ), esc_attr( bk_setting( 'font_signature', '11' ) ) );
     wp_add_inline_style( 'bk-main', $font_css );
     wp_enqueue_script( 'bk-main', BK_THEME_URI . '/assets/js/main.js', array(), BK_THEME_VERSION, true );
