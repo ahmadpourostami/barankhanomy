@@ -1,3 +1,13 @@
+<style>
+.bk-section-title,.bk-section-head{direction:rtl;text-align:right}
+.bk-section-title>div,.bk-section-head>div{direction:rtl;text-align:right;margin-left:auto;margin-right:0}
+.bk-section-title h2,.bk-section-head h2{text-align:right}
+.bk-footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid #eee7f0;padding-top:15px;direction:rtl}
+.bk-footer-bottom .bk-copyright{border:0;padding:0;margin:0;text-align:right}
+.bk-footer-bottom .bk-designer-signature{border:0;padding:0;margin:0;text-align:left}
+.bk-footer-bottom .bk-designer-signature a{color:var(--bk-purple);font-weight:600}
+@media(max-width:760px){.bk-footer-bottom{flex-direction:column;align-items:center;text-align:center;gap:6px}.bk-footer-bottom .bk-copyright,.bk-footer-bottom .bk-designer-signature{text-align:center}}
+</style>
 <footer class="bk-footer" id="contact">
   <div class="bk-container">
     <section class="bk-footer-cta">
@@ -11,8 +21,10 @@
       <div><h3>ارتباط با من</h3><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', bk_setting( 'phone', '09000000000' ) ) ); ?>"><?php echo esc_html( bk_setting( 'phone', '۰۹۰۰ ۰۰۰ ۰۰۰۰' ) ); ?></a><a href="mailto:<?php echo esc_attr( bk_setting( 'email', 'barankhanomy@gmail.com' ) ); ?>"><?php echo esc_html( bk_setting( 'email', 'barankhanomy@gmail.com' ) ); ?></a><div class="bk-socials"><span>◎</span><span>◌</span><span>✈</span></div></div>
       <div class="bk-footer-brand"><div class="bk-logo-mark">ب</div><strong><?php echo esc_html( bk_setting( 'brand_name', 'باران خانومی' ) ); ?></strong><p><?php echo esc_html( bk_setting( 'footer_brand_text', 'مهارت، خلاقیت و ساختن یک مسیر درآمدی واقعی.' ) ); ?></p></div>
     </div>
-    <div class="bk-copyright"><?php echo esc_html( bk_setting( 'copyright', 'تمامی حقوق این سایت متعلق به باران خانومی است.' ) ); ?></div>
-    <div class="bk-designer-signature">طراحی شده با <span aria-hidden="true">♥</span> توسط <a href="http://sabkekar.ir" target="_blank" rel="noopener noreferrer">سبک کار</a></div>
+    <div class="bk-footer-bottom">
+      <div class="bk-copyright"><?php echo esc_html( bk_setting( 'copyright', 'تمامی حقوق این سایت متعلق به باران خانومی است.' ) ); ?></div>
+      <div class="bk-designer-signature">طراحی شده با <span aria-hidden="true">♥</span> توسط <a href="http://sabkekar.ir" target="_blank" rel="noopener noreferrer">سبک کار</a></div>
+    </div>
   </div>
 </footer>
 <?php wp_footer(); ?>
