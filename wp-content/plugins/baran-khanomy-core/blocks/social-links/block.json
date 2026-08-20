@@ -1,0 +1,23 @@
+{
+  "apiVersion": 3,
+  "name": "baran-khanomy/social-links",
+  "title": "شبکه‌های اجتماعی باران خانومی",
+  "category": "widgets",
+  "icon": "share",
+  "description": "نمایش شبکه‌های اجتماعی با استایل هماهنگ با قالب باران خانومی.",
+  "textdomain": "baran-khanomy-core",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "instagram": { "type": "string", "default": "" },
+    "telegram": { "type": "string", "default": "" },
+    "whatsapp": { "type": "string", "default": "" },
+    "youtube": { "type": "string", "default": "" },
+    "title": { "type": "string", "default": "" },
+    "shape": { "type": "string", "default": "circle" },
+    "size": { "type": "number", "default": 44 },
+    "gap": { "type": "number", "default": 10 },
+    "alignment": { "type": "string", "default": "right" }
+  }
+}
