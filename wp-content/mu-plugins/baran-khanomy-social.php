@@ -60,3 +60,10 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_dequeue_style( 'bk-font' );
     wp_deregister_style( 'bk-font' );
 }, 9999 );
+
+add_filter( 'style_loader_src', function( $src, $handle ) {
+    if ( in_array( $handle, array( 'bk-main', 'bk-home' ), true ) ) {
+        $src = add_query_arg( 'bk_rev', '20260820-1', $src );
+    }
+    return $src;
+}, 9999, 2 );
