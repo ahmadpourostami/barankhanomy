@@ -1,11 +1,56 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-define( 'BK_THEME_VERSION', '0.1.8' );
+define( 'BK_THEME_VERSION', '0.1.9' );
 define( 'BK_THEME_DIR', get_template_directory() );
 define( 'BK_THEME_URI', get_template_directory_uri() );
-add_action( 'after_setup_theme', function() { load_theme_textdomain( 'baran-khanomy', BK_THEME_DIR . '/languages' ); add_theme_support( 'title-tag' ); add_theme_support( 'post-thumbnails' ); add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) ); add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 180, 'flex-height' => true, 'flex-width' => true ) ); register_nav_menus( array( 'primary' => 'منوی اصلی' ) ); });
-add_action( 'customize_register', function( $wp_customize ) { $wp_customize->add_section( 'bk_header_settings', array( 'title' => 'باران خانومی - سربرگ', 'priority' => 30 ) ); foreach ( array( 'bk_header_tagline' => array( 'مهارت • خلاقیت • درآمد', 'زیرعنوان لوگو' ), 'bk_search_placeholder' => array( 'جستجوی دوره...', 'متن جستجو' ), 'bk_login_label' => array( 'ورود / ثبت‌نام', 'متن دکمه ورود' ) ) as $setting => $data ) { $wp_customize->add_setting( $setting, array( 'default' => $data[0], 'sanitize_callback' => 'sanitize_text_field' ) ); $wp_customize->add_control( $setting, array( 'label' => $data[1], 'section' => 'bk_header_settings', 'type' => 'text' ) ); } });
-add_action( 'wp_enqueue_scripts', function() { wp_enqueue_style( 'bk-font', 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap', array(), null ); wp_enqueue_style( 'bk-main', BK_THEME_URI . '/assets/css/main.css', array(), BK_THEME_VERSION ); wp_enqueue_style( 'bk-home', BK_THEME_URI . '/assets/css/home.css', array( 'bk-main' ), BK_THEME_VERSION ); $font_css = sprintf( ':root{--bk-font-hero-title:%spx;--bk-font-benefit-title:%spx;--bk-font-benefit-text:%spx;--bk-font-categories-title:%spx;--bk-font-courses-title:%spx;--bk-font-course-title:%spx;--bk-font-about-title:%spx;--bk-font-works-title:%spx;--bk-font-testimonials-title:%spx;--bk-font-footer-title:%spx;--bk-font-footer-text:%spx;--bk-font-signature:%spx}.bk-hero h1{font-size:var(--bk-font-hero-title)}.bk-benefits strong{font-size:var(--bk-font-benefit-title)}.bk-benefits small{font-size:var(--bk-font-benefit-text)}.bk-section-head h2,.bk-section-title h2{font-size:var(--bk-font-categories-title)}.bk-course-body h3{font-size:var(--bk-font-course-title)}.bk-about-copy h2{font-size:var(--bk-font-about-title)}.bk-footer-cta h2,.bk-footer-grid h3{font-size:var(--bk-font-footer-title)}.bk-footer-cta p,.bk-footer-grid a,.bk-footer-grid p{font-size:var(--bk-font-footer-text)}.bk-designer-signature{font-size:var(--bk-font-signature);text-align:center;border-top:1px solid #eee7f0;margin-top:4px;padding-top:14px;color:#a094a6;line-height:1.8}.bk-designer-signature a{font-size:inherit;color:var(--bk-purple);font-weight:600}.bk-designer-signature span{font-size:inherit}', esc_attr( bk_setting( 'font_hero_title', '42' ) ), esc_attr( bk_setting( 'font_benefit_title', '12' ) ), esc_attr( bk_setting( 'font_benefit_text', '10' ) ), esc_attr( bk_setting( 'font_categories_title', '25' ) ), esc_attr( bk_setting( 'font_courses_title', '25' ) ), esc_attr( bk_setting( 'font_course_title', '13' ) ), esc_attr( bk_setting( 'font_about_title', '24' ) ), esc_attr( bk_setting( 'font_works_title', '25' ) ), esc_attr( bk_setting( 'font_testimonials_title', '25' ) ), esc_attr( bk_setting( 'font_footer_title', '20' ) ), esc_attr( bk_setting( 'font_footer_text', '10' ) ), esc_attr( bk_setting( 'font_signature', '11' ) ) ); wp_add_inline_style( 'bk-main', $font_css ); wp_enqueue_script( 'bk-main', BK_THEME_URI . '/assets/js/main.js', array(), BK_THEME_VERSION, true ); });
+
+add_action( 'after_setup_theme', function() {
+    load_theme_textdomain( 'baran-khanomy', BK_THEME_DIR . '/languages' );
+    add_theme_support( 'title-tag' );
+    add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
+    add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 180, 'flex-height' => true, 'flex-width' => true ) );
+    register_nav_menus( array( 'primary' => 'منوی اصلی' ) );
+} );
+
+/** Footer columns are managed from Appearance > Widgets. */
+add_action( 'widgets_init', function() {
+    $areas = array(
+        'footer_col_1' => 'فوتر - ستون ۱ (سمت راست)',
+        'footer_col_2' => 'فوتر - ستون ۲',
+        'footer_col_3' => 'فوتر - ستون ۳',
+        'footer_col_4' => 'فوتر - ستون ۴ (سمت چپ)',
+        'footer_social' => 'فوتر - شبکه‌های اجتماعی (زیر ستون اول)',
+    );
+    foreach ( $areas as $id => $name ) {
+        register_sidebar( array(
+            'name' => $name,
+            'id' => $id,
+            'description' => 'محتوای این بخش از مسیر نمایش → ابزارک‌ها قابل مدیریت است.',
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget' => '</section>',
+            'before_title' => '<h3 class="widget-title">',
+            'after_title' => '</h3>',
+        ) );
+    }
+} );
+
+add_action( 'customize_register', function( $wp_customize ) {
+    $wp_customize->add_section( 'bk_header_settings', array( 'title' => 'باران خانومی - سربرگ', 'priority' => 30 ) );
+    foreach ( array( 'bk_header_tagline' => array( 'مهارت • خلاقیت • درآمد', 'زیرعنوان لوگو' ), 'bk_search_placeholder' => array( 'جستجوی دوره...', 'متن جستجو' ), 'bk_login_label' => array( 'ورود / ثبت‌نام', 'متن دکمه ورود' ) ) as $setting => $data ) {
+        $wp_customize->add_setting( $setting, array( 'default' => $data[0], 'sanitize_callback' => 'sanitize_text_field' ) );
+        $wp_customize->add_control( $setting, array( 'label' => $data[1], 'section' => 'bk_header_settings', 'type' => 'text' ) );
+    }
+} );
+
+add_action( 'wp_enqueue_scripts', function() {
+    wp_enqueue_style( 'bk-main', BK_THEME_URI . '/assets/css/main.css', array(), BK_THEME_VERSION );
+    wp_enqueue_style( 'bk-home', BK_THEME_URI . '/assets/css/home.css', array( 'bk-main' ), BK_THEME_VERSION );
+    $font_css = sprintf( ':root{--bk-font-hero-title:%spx;--bk-font-benefit-title:%spx;--bk-font-benefit-text:%spx;--bk-font-categories-title:%spx;--bk-font-courses-title:%spx;--bk-font-course-title:%spx;--bk-font-about-title:%spx;--bk-font-works-title:%spx;--bk-font-testimonials-title:%spx;--bk-font-footer-title:%spx;--bk-font-footer-text:%spx;--bk-font-signature:%spx}.bk-hero h1{font-size:var(--bk-font-hero-title)}.bk-benefits strong{font-size:var(--bk-font-benefit-title)}.bk-benefits small{font-size:var(--bk-font-benefit-text)}.bk-section-head h2,.bk-section-title h2{font-size:var(--bk-font-categories-title)}.bk-course-body h3{font-size:var(--bk-font-course-title)}.bk-about-copy h2{font-size:var(--bk-font-about-title)}.bk-footer-cta h2,.bk-footer-grid h3,.bk-footer-grid .widget-title{font-size:var(--bk-font-footer-title)}.bk-footer-cta p,.bk-footer-grid a,.bk-footer-grid p,.bk-footer-grid .widget{font-size:var(--bk-font-footer-text)}.bk-designer-signature{font-size:var(--bk-font-signature);text-align:left;border:0;margin:0;padding:0;color:#a094a6;line-height:1.8}.bk-designer-signature a{font-size:inherit;color:var(--bk-purple);font-weight:600}.bk-designer-signature span{font-size:inherit}', esc_attr( bk_setting( 'font_hero_title', '42' ) ), esc_attr( bk_setting( 'font_benefit_title', '12' ) ), esc_attr( bk_setting( 'font_benefit_text', '10' ) ), esc_attr( bk_setting( 'font_categories_title', '25' ) ), esc_attr( bk_setting( 'font_courses_title', '25' ) ), esc_attr( bk_setting( 'font_course_title', '13' ) ), esc_attr( bk_setting( 'font_about_title', '24' ) ), esc_attr( bk_setting( 'font_works_title', '25' ) ), esc_attr( bk_setting( 'font_testimonials_title', '25' ) ), esc_attr( bk_setting( 'font_footer_title', '20' ) ), esc_attr( bk_setting( 'font_footer_text', '10' ) ), esc_attr( bk_setting( 'font_signature', '11' ) ) );
+    wp_add_inline_style( 'bk-main', $font_css );
+    wp_enqueue_script( 'bk-main', BK_THEME_URI . '/assets/js/main.js', array(), BK_THEME_VERSION, true );
+} );
+
 function bk_setting( $key, $fallback = '' ) { if ( function_exists( 'bk_core_get' ) ) { $value = bk_core_get( $key ); return $value !== '' ? $value : $fallback; } return $fallback; }
 function bk_icon( $name ) { $icons = array( 'grid' => '▦', 'bag' => '♧', 'gift' => '◇', 'award' => '✦', 'calendar' => '□', 'play' => '▷', 'headset' => '♧', 'heart' => '♡', 'arrow' => '←', 'menu' => '☰', 'search' => '⌕' ); return isset( $icons[ $name ] ) ? $icons[ $name ] : '•'; }
 function bk_tutor_is_active() { return function_exists( 'tutor_utils' ) && function_exists( 'tutor' ); }
