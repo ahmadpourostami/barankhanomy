@@ -54,3 +54,9 @@ function bk_social_settings_page() {
     </div>
     <?php
 }
+
+/* The theme still registers an old Google Fonts stylesheet; remove it so Estedad can be supplied locally by the site's font manager. */
+add_action( 'wp_enqueue_scripts', function() {
+    wp_dequeue_style( 'bk-font' );
+    wp_deregister_style( 'bk-font' );
+}, 9999 );
