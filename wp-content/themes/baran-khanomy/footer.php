@@ -12,6 +12,7 @@
       <div class="bk-footer-brand"><div class="bk-logo-mark">ب</div><strong><?php echo esc_html( bk_setting( 'brand_name', 'باران خانومی' ) ); ?></strong><p><?php echo esc_html( bk_setting( 'footer_brand_text', 'مهارت، خلاقیت و ساختن یک مسیر درآمدی واقعی.' ) ); ?></p></div>
     </div>
     <div class="bk-copyright"><?php echo esc_html( bk_setting( 'copyright', 'تمامی حقوق این سایت متعلق به باران خانومی است.' ) ); ?></div>
+    <div class="bk-designer-signature">طراحی شده با <span aria-hidden="true">♥</span> توسط <a href="http://sabkekar.ir" target="_blank" rel="noopener noreferrer">سبک کار</a></div>
   </div>
 </footer>
 <?php wp_footer(); ?>
