@@ -14,13 +14,13 @@ if ( ! function_exists( 'bk_social_defaults' ) ) {
 if ( ! function_exists( 'bk_social_get' ) ) {
     function bk_social_get( $key, $fallback = '' ) {
         $settings = wp_parse_args( get_option( 'bk_social_settings', array() ), bk_social_defaults() );
-        return isset( $settings[ $key ] ) && $settings[ $key ] !== '' ? $settings[ $key ] : $fallback;
+        return isset( $settings[ $key ] ) && $settings[ $key ] !== '' ? $settings[ $key] : $fallback;
     }
 }
 
 add_action( 'admin_menu', function() {
     add_submenu_page( 'bk-core-settings', 'شبکه‌های اجتماعی', 'شبکه‌های اجتماعی', 'manage_options', 'bk-social-settings', 'bk_social_settings_page' );
-} );
+}, 20 );
 
 add_action( 'admin_init', function() {
     register_setting( 'bk_social_settings_group', 'bk_social_settings', array(
