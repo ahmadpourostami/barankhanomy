@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-define( 'BK_THEME_VERSION', '0.1.9' );
+define( 'BK_THEME_VERSION', '0.2.0' );
 define( 'BK_THEME_DIR', get_template_directory() );
 define( 'BK_THEME_URI', get_template_directory_uri() );
 
@@ -57,8 +57,65 @@ function bk_tutor_is_active() { return function_exists( 'tutor_utils' ) && funct
 function bk_price_to_toman( $amount ) { return max( 0, (float) $amount / 10 ); }
 function bk_format_toman( $amount ) { return bk_to_persian_digits( number_format( bk_price_to_toman( $amount ), 0, '.', ',' ) ) . ' تومان'; }
 function bk_to_persian_digits( $value ) { return strtr( (string) $value, array( '0'=>'۰','1'=>'۱','2'=>'۲','3'=>'۳','4'=>'۴','5'=>'۵','6'=>'۶','7'=>'۷','8'=>'۸','9'=>'۹' ) ); }
-function bk_tutor_course_discount( $course_id = 0 ) { $course_id = $course_id ? $course_id : get_the_ID(); $regular = (float) get_post_meta( $course_id, 'tutor_course_price', true ); $sale = (float) get_post_meta( $course_id, 'tutor_course_sale_price', true ); if ( $regular <= 0 || $sale <= 0 || $sale >= $regular ) return ''; return (string) round( ( ( $regular - $sale ) / $regular ) * 100 ) . '%'; }
-function bk_tutor_course_price_parts( $course_id = 0 ) { $course_id = $course_id ? $course_id : get_the_ID(); $regular = (float) get_post_meta( $course_id, 'tutor_course_price', true ); $sale = (float) get_post_meta( $course_id, 'tutor_course_sale_price', true ); if ( $regular > 0 && $sale > 0 && $sale < $regular ) return array( 'regular' => bk_format_toman( $regular ), 'sale' => bk_format_toman( $sale ) ); if ( $regular > 0 ) return array( 'regular' => '', 'sale' => bk_format_toman( $regular ) ); return array( 'regular' => '', 'sale' => 'رایگان' ); }
+
+/**
+ * Get the WooCommerce product attached to a Tutor LMS course.
+ * Tutor LMS stores the relation on the course using _tutor_course_product_id.
+ */
+function bk_tutor_wc_product( $course_id = 0 ) {
+    $course_id = $course_id ? absint( $course_id ) : get_the_ID();
+    if ( ! $course_id || ! function_exists( 'wc_get_product' ) ) return false;
+    $product_id = 0;
+    if ( function_exists( 'tutor_utils' ) ) {
+        try {
+            $utils = tutor_utils();
+            if ( is_object( $utils ) && method_exists( $utils, 'get_course_product_id' ) ) {
+                $product_id = absint( $utils->get_course_product_id( $course_id ) );
+            }
+        } catch ( Throwable $e ) {
+            $product_id = 0;
+        }
+    }
+    if ( ! $product_id ) {
+        $product_id = absint( get_post_meta( $course_id, '_tutor_course_product_id', true ) );
+    }
+    return $product_id ? wc_get_product( $product_id ) : false;
+}
+
+function bk_tutor_course_discount( $course_id = 0 ) {
+    $course_id = $course_id ? $course_id : get_the_ID();
+    $product = bk_tutor_wc_product( $course_id );
+    if ( $product ) {
+        $regular = (float) $product->get_regular_price();
+        $sale = (float) $product->get_sale_price();
+        if ( $regular > 0 && $sale > 0 && $sale < $regular ) return (string) round( ( ( $regular - $sale ) / $regular ) * 100 ) . '%';
+        return '';
+    }
+    $regular = (float) get_post_meta( $course_id, 'tutor_course_price', true );
+    $sale = (float) get_post_meta( $course_id, 'tutor_course_sale_price', true );
+    if ( $regular <= 0 || $sale <= 0 || $sale >= $regular ) return '';
+    return (string) round( ( ( $regular - $sale ) / $regular ) * 100 ) . '%';
+}
+
+function bk_tutor_course_price_parts( $course_id = 0 ) {
+    $course_id = $course_id ? $course_id : get_the_ID();
+    $product = bk_tutor_wc_product( $course_id );
+    if ( $product ) {
+        $regular = (float) $product->get_regular_price();
+        $sale = (float) $product->get_sale_price();
+        if ( $regular > 0 && $sale > 0 && $sale < $regular ) return array( 'regular' => bk_format_toman( $regular ), 'sale' => bk_format_toman( $sale ) );
+        if ( $regular > 0 ) return array( 'regular' => '', 'sale' => bk_format_toman( $regular ) );
+        $current = (float) $product->get_price();
+        if ( $current > 0 ) return array( 'regular' => '', 'sale' => bk_format_toman( $current ) );
+        return array( 'regular' => '', 'sale' => 'رایگان' );
+    }
+    $regular = (float) get_post_meta( $course_id, 'tutor_course_price', true );
+    $sale = (float) get_post_meta( $course_id, 'tutor_course_sale_price', true );
+    if ( $regular > 0 && $sale > 0 && $sale < $regular ) return array( 'regular' => bk_format_toman( $regular ), 'sale' => bk_format_toman( $sale ) );
+    if ( $regular > 0 ) return array( 'regular' => '', 'sale' => bk_format_toman( $regular ) );
+    return array( 'regular' => '', 'sale' => 'رایگان' );
+}
+
 function bk_jalali_date( $timestamp = null ) { $timestamp = $timestamp ? (int) $timestamp : current_time( 'timestamp' ); $gy = (int) wp_date( 'Y', $timestamp, wp_timezone() ); $gm = (int) wp_date( 'n', $timestamp, wp_timezone() ); $gd = (int) wp_date( 'j', $timestamp, wp_timezone() ); $g_d_m = array( 0,31,59,90,120,151,181,212,243,273,304,334 ); $gy2 = $gm > 2 ? $gy + 1 : $gy; $days = 355666 + (365 * $gy) + (int)(($gy2 + 3) / 4) - (int)(($gy2 + 99) / 100) + (int)(($gy2 + 399) / 400) + $gd + $g_d_m[$gm-1]; $jy = -1595 + (33 * (int)($days / 12053)); $days %= 12053; $jy += 4 * (int)($days / 1461); $days %= 1461; if ( $days > 365 ) { $jy += (int)(($days - 1) / 365); $days = ($days - 1) % 365; } $jm = $days < 186 ? 1 + (int)($days / 31) : 7 + (int)(($days - 186) / 30); $jd = 1 + ( $days < 186 ? $days % 31 : ($days - 186) % 30 ); $months = array( 'فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند' ); return bk_to_persian_digits( $jd ) . ' ' . $months[$jm-1] . ' ' . bk_to_persian_digits( $jy ); }
 function bk_tutor_category_image_url( $term_id, $size = 'medium' ) { $keys = array( 'thumbnail_id', '_thumbnail_id', 'tutor_category_thumbnail_id', '_tutor_category_thumbnail_id', '_bk_category_image_id' ); foreach ( $keys as $key ) { $id = absint( get_term_meta( $term_id, $key, true ) ); if ( $id ) { $url = wp_get_attachment_image_url( $id, $size ); if ( $url ) return $url; } } return ''; }
 function bk_render_course_card( $course_id = 0 ) { $course_id = $course_id ? $course_id : get_the_ID(); $title = get_the_title( $course_id ); $url = get_permalink( $course_id ); $image = get_the_post_thumbnail_url( $course_id, 'large' ); $discount = bk_tutor_course_discount( $course_id ); $prices = bk_tutor_course_price_parts( $course_id ); $terms = get_the_terms( $course_id, 'course-category' ); ob_start(); ?><article class="bk-course-card"><a class="bk-course-image" href="<?php echo esc_url( $url ); ?>"><?php if ( $image ) : ?><img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>"><?php else : ?><div class="bk-course-placeholder"></div><?php endif; ?><?php if ( $terms && ! is_wp_error( $terms ) ) : ?><span class="bk-course-category-pill"><?php echo esc_html( $terms[0]->name ); ?></span><?php endif; ?><?php if ( $discount ) : ?><span class="bk-discount"><?php echo esc_html( $discount ); ?></span><?php endif; ?></a><div class="bk-course-body"><h3><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $title ); ?></a></h3><div class="bk-course-price"><?php if ( $prices['regular'] ) : ?><del><?php echo esc_html( $prices['regular'] ); ?></del><?php endif; ?><strong><?php echo esc_html( $prices['sale'] ); ?></strong></div><time class="bk-course-date" datetime="<?php echo esc_attr( get_the_date( 'c', $course_id ) ); ?>">انتشار: <?php echo esc_html( bk_jalali_date( get_post_time( 'U', true, $course_id ) ) ); ?></time><a href="<?php echo esc_url( $url ); ?>" class="bk-course-link"><?php echo esc_html( bk_setting( 'course_button_label', 'مشاهده دوره' ) ); ?> <span>←</span></a></div></article><?php return ob_get_clean(); }
