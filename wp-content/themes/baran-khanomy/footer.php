@@ -15,12 +15,6 @@
         <?php endif; ?>
         <?php if ( is_active_sidebar( 'footer_social' ) ) : ?>
           <div class="bk-footer-social-widget-area"><?php dynamic_sidebar( 'footer_social' ); ?></div>
-        <?php elseif ( function_exists( 'bk_social_get' ) ) : ?>
-          <div class="bk-socials" aria-label="شبکه‌های اجتماعی">
-            <?php if ( bk_social_get( 'instagram' ) ) : ?><a href="<?php echo esc_url( bk_social_get( 'instagram' ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="اینستاگرام">◎</a><?php endif; ?>
-            <?php if ( bk_social_get( 'telegram' ) ) : ?><a href="<?php echo esc_url( bk_social_get( 'telegram' ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="تلگرام">✈</a><?php endif; ?>
-            <?php if ( bk_social_get( 'whatsapp' ) ) : ?><a href="<?php echo esc_url( bk_social_get( 'whatsapp' ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="واتساپ">◌</a><?php endif; ?>
-          </div>
         <?php endif; ?>
       </div>
 
