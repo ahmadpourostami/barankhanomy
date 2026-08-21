@@ -2,18 +2,19 @@
 /**
  * Plugin Name: Baran Khanomy Core
  * Description: مدیریت محتوای قالب باران خانومی و رابط ورود/ثبت‌نام موبایلی.
- * Version: 0.4.2
+ * Version: 0.4.3
  * Author: Baran Khanomy
  * Text Domain: baran-khanomy-core
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BK_CORE_VERSION', '0.4.2' );
+define( 'BK_CORE_VERSION', '0.4.3' );
 define( 'BK_CORE_FILE', __FILE__ );
 define( 'BK_CORE_DIR', plugin_dir_path( __FILE__ ) );
 require_once BK_CORE_DIR . 'includes/settings.php';
 require_once BK_CORE_DIR . 'includes/content-types.php';
 require_once BK_CORE_DIR . 'includes/shortcodes.php';
+require_once BK_CORE_DIR . 'includes/pattern-widget.php';
 
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'widgets-block-editor' );
