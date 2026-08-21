@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-define( 'BK_THEME_VERSION', '0.2.0' );
+define( 'BK_THEME_VERSION', '0.2.1' );
 define( 'BK_THEME_DIR', get_template_directory() );
 define( 'BK_THEME_URI', get_template_directory_uri() );
 
@@ -54,14 +54,10 @@ add_action( 'wp_enqueue_scripts', function() {
 function bk_setting( $key, $fallback = '' ) { if ( function_exists( 'bk_core_get' ) ) { $value = bk_core_get( $key ); return $value !== '' ? $value : $fallback; } return $fallback; }
 function bk_icon( $name ) { $icons = array( 'grid' => '▦', 'bag' => '♧', 'gift' => '◇', 'award' => '✦', 'calendar' => '□', 'play' => '▷', 'headset' => '♧', 'heart' => '♡', 'arrow' => '←', 'menu' => '☰', 'search' => '⌕' ); return isset( $icons[ $name ] ) ? $icons[ $name ] : '•'; }
 function bk_tutor_is_active() { return function_exists( 'tutor_utils' ) && function_exists( 'tutor' ); }
-function bk_price_to_toman( $amount ) { return max( 0, (float) $amount / 10 ); }
+function bk_price_to_toman( $amount ) { return max( 0, (float) $amount ); }
 function bk_format_toman( $amount ) { return bk_to_persian_digits( number_format( bk_price_to_toman( $amount ), 0, '.', ',' ) ) . ' تومان'; }
 function bk_to_persian_digits( $value ) { return strtr( (string) $value, array( '0'=>'۰','1'=>'۱','2'=>'۲','3'=>'۳','4'=>'۴','5'=>'۵','6'=>'۶','7'=>'۷','8'=>'۸','9'=>'۹' ) ); }
 
-/**
- * Get the WooCommerce product attached to a Tutor LMS course.
- * Tutor LMS stores the relation on the course using _tutor_course_product_id.
- */
 function bk_tutor_wc_product( $course_id = 0 ) {
     $course_id = $course_id ? absint( $course_id ) : get_the_ID();
     if ( ! $course_id || ! function_exists( 'wc_get_product' ) ) return false;
@@ -76,9 +72,7 @@ function bk_tutor_wc_product( $course_id = 0 ) {
             $product_id = 0;
         }
     }
-    if ( ! $product_id ) {
-        $product_id = absint( get_post_meta( $course_id, '_tutor_course_product_id', true ) );
-    }
+    if ( ! $product_id ) $product_id = absint( get_post_meta( $course_id, '_tutor_course_product_id', true ) );
     return $product_id ? wc_get_product( $product_id ) : false;
 }
 
