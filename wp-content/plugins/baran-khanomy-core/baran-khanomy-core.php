@@ -2,13 +2,13 @@
 /**
  * Plugin Name: Baran Khanomy Core
  * Description: مدیریت محتوای قالب باران خانومی و رابط ورود/ثبت‌نام موبایلی.
- * Version: 0.4.3
+ * Version: 0.4.4
  * Author: Baran Khanomy
  * Text Domain: baran-khanomy-core
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'BK_CORE_VERSION', '0.4.3' );
+define( 'BK_CORE_VERSION', '0.4.4' );
 define( 'BK_CORE_FILE', __FILE__ );
 define( 'BK_CORE_DIR', plugin_dir_path( __FILE__ ) );
 require_once BK_CORE_DIR . 'includes/settings.php';
@@ -22,7 +22,7 @@ add_action( 'after_setup_theme', function() {
 
 add_action( 'init', 'bk_register_gutenberg_blocks', 30 );
 function bk_register_gutenberg_blocks() {
-    $blocks = array( 'tutor-course-grid', 'social-links' );
+    $blocks = array( 'tutor-course-grid', 'social-links', 'pattern-section' );
     foreach ( $blocks as $block ) {
         $block_dir = BK_CORE_DIR . 'blocks/' . $block;
         if ( file_exists( $block_dir . '/block.json' ) ) register_block_type( $block_dir );
