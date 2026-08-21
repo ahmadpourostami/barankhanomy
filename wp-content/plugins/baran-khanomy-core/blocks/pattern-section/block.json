@@ -1,0 +1,15 @@
+{
+  "apiVersion": 3,
+  "name": "baran-khanomy/pattern-section",
+  "title": "الگوی ذخیره‌شده باران خانومی",
+  "category": "widgets",
+  "icon": "layout",
+  "description": "نمایش مستقیم یک الگوی ذخیره‌شده Gutenberg داخل صفحه و ابزارک‌ها.",
+  "textdomain": "baran-khanomy-core",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "patternId": { "type": "number", "default": 0 }
+  }
+}
