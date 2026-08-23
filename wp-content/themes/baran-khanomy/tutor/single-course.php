@@ -28,6 +28,11 @@ $author_name = $author_id ? get_the_author_meta( 'display_name', $author_id ) : 
 $author_avatar = $author_id ? get_avatar_url( $author_id, array( 'size' => 96 ) ) : '';
 $has_video = apply_filters( 'tutor_course_has_video', tutor_utils()->has_video_in_single(), $course_id );
 
+// Load the page-specific stylesheet before get_header() so wp_head() prints it.
+$tutor_css_path = BK_THEME_DIR . '/assets/css/tutor.css';
+$tutor_css_version = file_exists( $tutor_css_path ) ? (string) filemtime( $tutor_css_path ) : BK_THEME_VERSION;
+wp_enqueue_style( 'bk-tutor', BK_THEME_URI . '/assets/css/tutor.css', array( 'bk-main' ), $tutor_css_version );
+
 get_header();
 
 if ( ! is_user_logged_in() && ! $is_public && $student_must_login_to_view_course ) {
