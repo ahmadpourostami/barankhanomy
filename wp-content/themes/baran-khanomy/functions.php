@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-define( 'BK_THEME_VERSION', '0.2.1' );
+define( 'BK_THEME_VERSION', '0.2.2' );
 define( 'BK_THEME_DIR', get_template_directory() );
 define( 'BK_THEME_URI', get_template_directory_uri() );
 
