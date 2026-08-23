@@ -27,7 +27,31 @@
         <input type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php echo esc_attr( get_theme_mod( 'bk_search_placeholder', 'جستجوی دوره...' ) ); ?>" aria-label="جستجوی دوره">
         <?php if ( bk_tutor_is_active() ) : ?><input type="hidden" name="post_type" value="<?php echo esc_attr( tutor()->course_post_type ); ?>"><?php endif; ?>
       </form>
-      <button class="bk-login bk-open-auth" type="button" data-bk-open-auth><span>♙</span> <?php echo esc_html( get_theme_mod( 'bk_login_label', 'ورود / ثبت‌نام' ) ); ?></button>
+      <?php if ( is_user_logged_in() ) : ?>
+        <?php
+        $bk_profile_url = home_url( '/dashboard/' );
+        if ( function_exists( 'tutor_utils' ) ) {
+            try {
+                $bk_utils = tutor_utils();
+                if ( is_object( $bk_utils ) && method_exists( $bk_utils, 'tutor_dashboard_url' ) ) {
+                    $bk_profile_url = $bk_utils->tutor_dashboard_url();
+                }
+            } catch ( Throwable $e ) {
+                // Keep the dashboard fallback URL.
+            }
+        }
+        $bk_logout_url = wp_logout_url( home_url( '/' ) );
+        ?>
+        <div class="bk-user-actions" aria-label="حساب کاربری">
+          <a class="bk-profile-link" href="<?php echo esc_url( $bk_profile_url ); ?>">
+            <span class="bk-profile-icon" aria-hidden="true">♙</span>
+            <span>پروفایل</span>
+          </a>
+          <a class="bk-logout-link" href="<?php echo esc_url( $bk_logout_url ); ?>">خروج</a>
+        </div>
+      <?php else : ?>
+        <button class="bk-login bk-open-auth" type="button" data-bk-open-auth><span>♙</span> <?php echo esc_html( get_theme_mod( 'bk_login_label', 'ورود / ثبت‌نام' ) ); ?></button>
+      <?php endif; ?>
     </div>
   </div>
 </header>
