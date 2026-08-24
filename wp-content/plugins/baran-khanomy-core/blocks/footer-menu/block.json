@@ -1,0 +1,19 @@
+{
+  "apiVersion": 3,
+  "name": "baran-khanomy/footer-menu",
+  "title": "منوی فوتر باران خانومی",
+  "category": "widgets",
+  "icon": "menu-alt3",
+  "description": "نمایش یک منوی زیبا و هماهنگ با فوتر قالب باران خانومی.",
+  "textdomain": "baran-khanomy-core",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "menuId": { "type": "number", "default": 0 },
+    "title": { "type": "string", "default": "" },
+    "style": { "type": "string", "default": "list" },
+    "alignment": { "type": "string", "default": "right" },
+    "showArrow": { "type": "boolean", "default": true }
+  }
+}
