@@ -1,0 +1,21 @@
+{
+  "apiVersion": 3,
+  "name": "baran-khanomy/contact-info",
+  "title": "اطلاعات تماس باران خانومی",
+  "category": "widgets",
+  "icon": "phone",
+  "description": "نمایش اطلاعات تماس با استایل هماهنگ با قالب باران خانومی.",
+  "textdomain": "baran-khanomy-core",
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "title": { "type": "string", "default": "اطلاعات تماس" },
+    "phone": { "type": "string", "default": "" },
+    "email": { "type": "string", "default": "" },
+    "address": { "type": "string", "default": "" },
+    "hours": { "type": "string", "default": "" },
+    "showIcons": { "type": "boolean", "default": true },
+    "alignment": { "type": "string", "default": "right" }
+  }
+}
