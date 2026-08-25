@@ -3,8 +3,27 @@ Theme Name: Baran Khanomy
 Theme URI: https://github.com/ahmadpourostami/barankhanomy
 Author: Baran Khanomy
 Description: قالب فارسی و RTL باران خانومی، طراحی‌شده بر اساس رابط کاربری مرجع دسکتاپ و موبایل.
-Version: 0.1.0
+Version: 0.1.1
 Text Domain: baran-khanomy
 */
 
 @import url('assets/css/main.css');
+
+/* Hero benefits: larger, more visible icons and proportional typography */
+.bk-benefits-grid{min-height:120px}
+.bk-benefits-grid>div{gap:18px;padding:14px 22px}
+.bk-benefit-icon{width:90px;height:90px;min-width:90px;min-height:90px;display:grid;place-items:center;font-size:38px;line-height:1;color:var(--bk-purple);border-radius:50%;background:#f8effc}
+.bk-benefit-icon svg{width:52px;height:52px;display:block}
+.bk-benefit-icon img{width:90px;height:90px;display:block;object-fit:contain;border-radius:50%}
+.bk-benefit-copy{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.bk-benefits strong{font-size:16px;line-height:1.7}
+.bk-benefits small{font-size:12px;line-height:1.9;margin-top:3px}
+@media(max-width:760px){
+  .bk-benefits-grid{padding:10px 0}
+  .bk-benefits-grid>div{padding:12px 10px;gap:16px}
+  .bk-benefit-icon{width:76px;height:76px;min-width:76px;min-height:76px;font-size:32px}
+  .bk-benefit-icon svg{width:44px;height:44px}
+  .bk-benefit-icon img{width:76px;height:76px}
+  .bk-benefits strong{font-size:14px}
+  .bk-benefits small{font-size:11px}
+}
