@@ -53,8 +53,8 @@ add_action( 'after_setup_theme', function() {
 add_action( 'wp_enqueue_scripts', function() {
     if ( ! class_exists( 'WooCommerce' ) ) return;
     $theme_uri = get_template_directory_uri();
-    wp_enqueue_style( 'bk-marketplace', $theme_uri . '/assets/css/marketplace.css', array( 'bk-main' ), '1.0.1' );
-    wp_enqueue_script( 'bk-marketplace', $theme_uri . '/assets/js/marketplace.js', array(), '1.0.0', true );
+    wp_enqueue_style( 'bk-marketplace', $theme_uri . '/assets/css/marketplace.css', array( 'bk-main' ), '1.0.2' );
+    wp_enqueue_script( 'bk-marketplace', $theme_uri . '/assets/js/marketplace.js', array(), '1.0.1', true );
 } );
 
 function bk_marketplace_product_card( $product ) {
@@ -75,12 +75,14 @@ function bk_marketplace_product_card( $product ) {
     ob_start();
     ?>
     <article class="bk-market-card">
-        <a class="bk-market-card-image" href="<?php echo esc_url( $url ); ?>">
-            <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>" loading="lazy">
+        <div class="bk-market-card-image">
+            <a class="bk-market-card-image-link" href="<?php echo esc_url( $url ); ?>" aria-label="مشاهده <?php echo esc_attr( $title ); ?>">
+                <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>" loading="lazy">
+            </a>
             <?php if ( $discount ) : ?><span class="bk-market-discount"><?php echo esc_html( bk_to_persian_digits( $discount ) ); ?>٪</span><?php endif; ?>
             <?php if ( $categories ) : ?><span class="bk-market-category-badge"><?php echo wp_kses_post( $categories ); ?></span><?php endif; ?>
-            <span class="bk-market-wishlist" aria-hidden="true">♡</span>
-        </a>
+            <button type="button" class="bk-market-wishlist" data-product-id="<?php echo esc_attr( $id ); ?>" aria-label="افزودن <?php echo esc_attr( $title ); ?> به علاقه‌مندی‌ها" aria-pressed="false">♡</button>
+        </div>
         <div class="bk-market-card-body">
             <h3><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $title ); ?></a></h3>
             <?php if ( $description ) : ?><p class="bk-market-excerpt"><?php echo esc_html( $description ); ?></p><?php endif; ?>
