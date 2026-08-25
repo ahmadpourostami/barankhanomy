@@ -17,6 +17,7 @@ require_once BK_CORE_DIR . 'includes/shortcodes.php';
 require_once BK_CORE_DIR . 'includes/pattern-widget.php';
 require_once BK_CORE_DIR . 'includes/course-category-images.php';
 require_once BK_CORE_DIR . 'includes/auth.php';
+require_once BK_CORE_DIR . 'includes/marketplace.php';
 
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'widgets-block-editor' );
@@ -36,6 +37,7 @@ function bk_core_activate() {
     $defaults = bk_core_defaults();
     if ( false === get_option( 'bk_core_settings', false ) ) add_option( 'bk_core_settings', $defaults );
     if ( false === get_option( 'bk_sms_settings', false ) ) add_option( 'bk_sms_settings', bk_sms_defaults() );
+    if ( false === get_option( 'bk_marketplace_settings', false ) ) add_option( 'bk_marketplace_settings', bk_marketplace_defaults() );
     if ( function_exists( 'bk_register_content_types' ) ) bk_register_content_types();
     if ( function_exists( 'bk_seed_demo_content' ) ) bk_seed_demo_content();
     bk_core_migrate_homepage_content();
