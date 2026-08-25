@@ -53,7 +53,7 @@ add_action( 'after_setup_theme', function() {
 add_action( 'wp_enqueue_scripts', function() {
     if ( ! class_exists( 'WooCommerce' ) ) return;
     $theme_uri = get_template_directory_uri();
-    wp_enqueue_style( 'bk-marketplace', $theme_uri . '/assets/css/marketplace.css', array( 'bk-main' ), '1.0.0' );
+    wp_enqueue_style( 'bk-marketplace', $theme_uri . '/assets/css/marketplace.css', array( 'bk-main' ), '1.0.1' );
     wp_enqueue_script( 'bk-marketplace', $theme_uri . '/assets/js/marketplace.js', array(), '1.0.0', true );
 } );
 
@@ -78,10 +78,10 @@ function bk_marketplace_product_card( $product ) {
         <a class="bk-market-card-image" href="<?php echo esc_url( $url ); ?>">
             <img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $title ); ?>" loading="lazy">
             <?php if ( $discount ) : ?><span class="bk-market-discount"><?php echo esc_html( bk_to_persian_digits( $discount ) ); ?>٪</span><?php endif; ?>
+            <?php if ( $categories ) : ?><span class="bk-market-category-badge"><?php echo wp_kses_post( $categories ); ?></span><?php endif; ?>
             <span class="bk-market-wishlist" aria-hidden="true">♡</span>
         </a>
         <div class="bk-market-card-body">
-            <?php if ( $categories ) : ?><div class="bk-market-category"><?php echo wp_kses_post( $categories ); ?></div><?php endif; ?>
             <h3><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $title ); ?></a></h3>
             <?php if ( $description ) : ?><p class="bk-market-excerpt"><?php echo esc_html( $description ); ?></p><?php endif; ?>
             <div class="bk-market-meta">
