@@ -6,7 +6,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 add_action( 'admin_init', function() {
-    register_setting( 'bk_benefit4_settings_group', 'bk_benefit4_settings', array(
+    register_setting( 'bk_core_settings_group', 'bk_benefit4_settings', array(
         'sanitize_callback' => function( $input ) {
             $input = is_array( $input ) ? $input : array();
             return array(
@@ -53,7 +53,6 @@ add_action( 'admin_footer', function() {
     <?php
 } );
 
-/* Never let the legacy migration accidentally blank a previously selected hero image. */
 add_filter( 'pre_update_option_bk_core_settings', function( $value, $old_value ) {
     if ( is_array( $old_value ) && ! empty( $old_value['hero_image'] ) && is_array( $value ) && empty( $value['hero_image'] ) ) {
         $value['hero_image'] = $old_value['hero_image'];
