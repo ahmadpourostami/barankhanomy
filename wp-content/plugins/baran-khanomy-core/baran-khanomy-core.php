@@ -70,5 +70,6 @@ function bk_core_migrate_homepage_content() {
 
 add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_style( 'bk-core-auth', plugins_url( 'assets/auth.css', __FILE__ ), array(), BK_CORE_VERSION );
+    wp_enqueue_style( 'bk-marketplace-icons', plugins_url( 'assets/marketplace-icons.css', __FILE__ ), array(), BK_CORE_VERSION );
     wp_enqueue_script( 'bk-core-auth', plugins_url( 'assets/auth.js', __FILE__ ), array(), BK_CORE_VERSION, true );
 });
