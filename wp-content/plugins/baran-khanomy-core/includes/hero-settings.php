@@ -34,10 +34,12 @@ add_action( 'wp_head', function() {
     if ( ! is_front_page() ) return;
     ?>
     <style id="bk-hero-start-inline">
-        .bk-hero-grid{position:relative}
-        .bk-hero-start{position:absolute;right:32px;left:auto;bottom:28px;z-index:5;min-height:48px;padding:0 24px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;background:var(--bk-gold);color:#2b2330;font-size:13px;font-weight:800;box-shadow:0 10px 25px rgba(43,35,48,.14);transition:transform .2s ease,box-shadow .2s ease}
-        .bk-hero-start:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(43,35,48,.18);color:#2b2330}
-        @media(max-width:760px){.bk-hero-start{right:18px;left:auto;bottom:18px;min-height:44px;padding:0 18px;font-size:12px}}
+        .bk-hero-image-only{position:relative;min-height:460px;background-color:#f6edfb;background-position:center;background-repeat:no-repeat;background-size:cover;overflow:hidden}
+        .bk-hero-image-only::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,0) 55%,rgba(43,35,48,.06));pointer-events:none}
+        .bk-hero-image-only .bk-hero-grid{position:relative;z-index:2;min-height:460px;display:block}
+        .bk-hero-start{position:absolute;right:32px;left:auto;bottom:28px;z-index:5;min-height:48px;padding:0 24px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;background:var(--bk-purple);border:1px solid var(--bk-purple);color:#fff;font-size:13px;font-weight:800;box-shadow:0 10px 25px rgba(43,35,48,.14);transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+        .bk-hero-start:hover{transform:translateY(-2px);background:var(--bk-purple-dark);border-color:var(--bk-purple-dark);box-shadow:0 14px 30px rgba(43,35,48,.18);color:#fff}
+        @media(max-width:760px){.bk-hero-image-only,.bk-hero-image-only .bk-hero-grid{min-height:300px}.bk-hero-start{right:18px;left:auto;bottom:18px;min-height:44px;padding:0 18px;font-size:12px}}
     </style>
     <?php
 } );
@@ -76,7 +78,6 @@ add_action( 'admin_footer', function() {
         if (!heroHeading.length || heroHeading.data('bkHeroReady')) return;
         heroHeading.data('bkHeroReady', true);
 
-        // Remove the old image-only row and replace it with the complete hero row.
         heroHeading.next('table.form-table').remove();
 
         const image = <?php echo wp_json_encode( $settings['image'] ); ?>;
