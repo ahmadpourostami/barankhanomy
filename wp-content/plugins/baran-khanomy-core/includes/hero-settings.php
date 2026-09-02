@@ -34,6 +34,17 @@ add_action( 'admin_init', function() {
     ) );
 } );
 
+add_action( 'wp_head', function() {
+    if ( ! is_front_page() ) return;
+    ?>
+    <style id="bk-hero-start-inline">
+        .bk-hero-start{position:absolute;left:32px;bottom:28px;z-index:5;min-height:48px;padding:0 24px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;background:var(--bk-gold);color:#2b2330;font-size:13px;font-weight:800;box-shadow:0 10px 25px rgba(43,35,48,.14);transition:transform .2s ease,box-shadow .2s ease}
+        .bk-hero-start:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(43,35,48,.18);color:#2b2330}
+        @media(max-width:760px){.bk-hero-start{left:18px;bottom:18px;min-height:44px;padding:0 18px;font-size:12px}}
+    </style>
+    <?php
+} );
+
 add_action( 'admin_footer', function() {
     $screen = get_current_screen();
     if ( ! $screen || 'toplevel_page_baran-khanomy-theme-settings' !== $screen->id ) return;
