@@ -12,6 +12,7 @@ define( 'BK_CORE_VERSION', '0.4.8' );
 define( 'BK_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BK_CORE_FILE', __FILE__ );
 require_once BK_CORE_DIR . 'includes/settings.php';
+require_once BK_CORE_DIR . 'includes/hero-settings.php';
 require_once BK_CORE_DIR . 'includes/content-types.php';
 require_once BK_CORE_DIR . 'includes/shortcodes.php';
 require_once BK_CORE_DIR . 'includes/pattern-widget.php';
@@ -36,6 +37,7 @@ register_activation_hook( __FILE__, 'bk_core_activate' );
 function bk_core_activate() {
     $defaults = bk_core_defaults();
     if ( false === get_option( 'bk_core_settings', false ) ) add_option( 'bk_core_settings', $defaults );
+    if ( false === get_option( 'bk_hero_extra', false ) ) add_option( 'bk_hero_extra', bk_hero_extra_defaults() );
     if ( false === get_option( 'bk_sms_settings', false ) ) add_option( 'bk_sms_settings', bk_sms_defaults() );
     if ( false === get_option( 'bk_marketplace_settings', false ) ) add_option( 'bk_marketplace_settings', bk_marketplace_defaults() );
     if ( function_exists( 'bk_register_content_types' ) ) bk_register_content_types();
@@ -65,7 +67,8 @@ function bk_core_migrate_homepage_content() {
     if ( ! empty( $settings['hero_text'] ) && empty( $settings['about_text'] ) ) $settings['about_text'] = sanitize_textarea_field( $settings['hero_text'] );
     if ( ! empty( $settings['hero_primary'] ) && empty( $settings['about_primary'] ) ) $settings['about_primary'] = sanitize_text_field( $settings['hero_primary'] );
     if ( ! empty( $settings['hero_secondary'] ) && empty( $settings['about_secondary'] ) ) $settings['about_secondary'] = sanitize_text_field( $settings['hero_secondary'] );
-    if ( empty( $settings['about_image_migrated'] ) ) { $settings['hero_image'] = ''; $settings['about_image_migrated'] = 1; update_option( 'bk_core_settings', $settings ); }
+    /* Do not clear hero_image. The hero image is a persistent user setting. */
+    if ( empty( $settings['about_image_migrated'] ) ) { $settings['about_image_migrated'] = 1; update_option( 'bk_core_settings', $settings ); }
 }
 
 add_action( 'wp_enqueue_scripts', function() {
