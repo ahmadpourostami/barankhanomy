@@ -7,6 +7,7 @@ Version: 0.1.1
 Text Domain: baran-khanomy
 */
 @import url('assets/css/main.css');
+@import url('assets/css/student-works.css');
 
 /* Homepage benefits: four equal columns and genuinely large icons. */
 .bk-benefits-grid{min-height:120px;grid-template-columns:repeat(4,minmax(0,1fr))}
