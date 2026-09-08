@@ -29,7 +29,6 @@ get_header();
 <div><span>شناسه محصول</span><strong>#<?php echo esc_html( $product->get_sku() ?: $product->get_id() ); ?></strong></div>
 </div>
 <?php woocommerce_template_single_add_to_cart(); ?>
-<div class="bk-market-single-guarantee"><span class="bk-market-icon bk-market-icon-heart" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"/></svg></span><div><strong>خریدی مطمئن</strong><small>محصول دست‌ساز با عشق آماده شده است</small></div></div>
 </div>
 </div>
 <div class="bk-market-benefits">
