@@ -63,6 +63,19 @@ function bk_icon_customizer_defaults() {
     );
 }
 
+/**
+ * Get a configured SVG icon for PHP templates.
+ * This is the primary rendering path; JavaScript remains only as a fallback
+ * for markup that cannot be rendered directly by the template.
+ */
+function bk_get_custom_icon( $key ) {
+    $defaults = bk_icon_customizer_defaults();
+    if ( ! isset( $defaults[ $key ] ) ) return '';
+
+    $svg = get_theme_mod( $key, $defaults[ $key ] );
+    return bk_icon_customizer_sanitize_svg( $svg );
+}
+
 add_action( 'customize_register', function( $wp_customize ) {
     $wp_customize->add_section( 'bk_icon_settings', array(
         'title'       => 'باران خانومی - آیکن‌ها',
@@ -104,17 +117,19 @@ add_action( 'customize_register', function( $wp_customize ) {
     }
 } );
 
+/* Keep a client-side fallback for any matching icon markup outside templates. */
 add_action( 'wp_footer', function() {
     if ( is_admin() ) return;
 
     $icons = array();
     foreach ( bk_icon_customizer_defaults() as $key => $default ) {
-        $icons[ $key ] = get_theme_mod( $key, $default );
+        $icons[ $key ] = bk_get_custom_icon( $key );
     }
     ?>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const icons = <?php echo wp_json_encode( $icons ); ?>;
+
         const course = [
             'bk_icon_course_clock',
             'bk_icon_course_level',
@@ -126,13 +141,20 @@ add_action( 'wp_footer', function() {
             if (course[index] && icons[course[index]]) el.innerHTML = icons[course[index]];
         });
 
+        /* Product icons are keyed by data attribute when available. */
+        document.querySelectorAll('.bk-market-benefits [data-bk-icon-key]').forEach(function (el) {
+            const key = el.getAttribute('data-bk-icon-key');
+            if (key && icons[key]) el.innerHTML = icons[key];
+        });
+
+        /* Backward-compatible fallback for older product markup. */
         const product = [
             'bk_icon_product_handmade',
             'bk_icon_product_quality',
             'bk_icon_product_return',
             'bk_icon_product_shipping'
         ];
-        document.querySelectorAll('.bk-market-benefits .bk-market-icon').forEach(function (el, index) {
+        document.querySelectorAll('.bk-market-benefits .bk-market-icon:not([data-bk-icon-key])').forEach(function (el, index) {
             if (product[index] && icons[product[index]]) el.innerHTML = icons[product[index]];
         });
     });
