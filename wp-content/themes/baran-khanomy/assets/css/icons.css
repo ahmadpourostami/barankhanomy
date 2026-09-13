@@ -1,0 +1,8 @@
+/* Baran Khanomy icon system */
+.bk-benefit-icon,.bk-category-placeholder,.bk-course-placeholder-icon{display:grid;place-items:center;line-height:0}
+.bk-benefit-icon svg,.bk-category-placeholder svg,.bk-course-placeholder-icon svg{width:42px;height:42px;display:block;overflow:visible}
+.bk-benefit-icon svg *,.bk-category-placeholder svg *,.bk-course-placeholder-icon svg *{vector-effect:non-scaling-stroke}
+.bk-benefit-icon{background:#f8effc;border-radius:14px}
+.bk-category-placeholder{width:64px;height:64px;border-radius:18px;background:#f8effc}
+.bk-category-placeholder svg{width:30px;height:30px}
+@media(max-width:760px){.bk-benefit-icon svg{width:38px;height:38px}.bk-category-placeholder{width:56px;height:56px}.bk-category-placeholder svg{width:28px;height:28px}}
