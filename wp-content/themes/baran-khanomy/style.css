@@ -3,7 +3,7 @@ Theme Name: Baran Khanomy
 Theme URI: https://github.com/ahmadpourostami/barankhanomy
 Author: Baran Khanomy
 Description: قالب فارسی و RTL باران خانومی، طراحی‌شده بر اساس رابط کاربری مرجع دسکتاپ و موبایل.
-Version: 0.2.3
+Version: 0.2.4
 Text Domain: baran-khanomy
 */
 @import url('assets/css/main.css');
@@ -20,3 +20,24 @@ Text Domain: baran-khanomy
 .bk-benefits small{font-size:11px;line-height:1.8;margin-top:2px;text-align:center!important}
 @media(max-width:1000px) and (min-width:761px){.bk-benefits-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.bk-benefits-grid>div{border:0!important}}
 @media(max-width:760px){.bk-benefits-grid{grid-template-columns:1fr!important;min-height:0;padding:8px 0}.bk-benefits-grid>div{padding:13px 18px;gap:12px;border:0!important}.bk-benefit-icon{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;flex-basis:44px!important}.bk-benefit-icon svg{width:38px;height:38px}.bk-benefit-icon img{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}.bk-benefits strong{font-size:13px}.bk-benefits small{font-size:10px}}
+
+/* Button system: three consistent sizes, preserving each component's existing layout. */
+:root{--bk-btn-primary:#7f50b0;--bk-btn-primary-hover:#6f459b;--bk-btn-border:#bfa5d4;--bk-btn-gold:#d79c26;--bk-btn-text:#fff}
+.bk-btn{min-height:48px;padding:0 28px;border-radius:12px;font-size:12px;line-height:1.5;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease}
+.bk-btn:not(.bk-btn-outline):not(.bk-btn-gold){background:var(--bk-btn-primary);color:var(--bk-btn-text)}
+.bk-btn:not(.bk-btn-outline):not(.bk-btn-gold):hover{background:var(--bk-btn-primary-hover);color:#fff}
+.bk-btn-outline{min-height:48px;padding:0 28px;border:1px solid var(--bk-btn-border);background:#fff;color:var(--bk-btn-primary)}
+.bk-btn-outline:hover{background:#faf5fd;border-color:var(--bk-btn-primary);color:var(--bk-btn-primary)}
+.bk-btn-gold{background:var(--bk-btn-gold);color:#fff;min-height:48px;padding:0 28px;border-radius:12px;font-size:12px;font-weight:700}
+.bk-btn-gold:hover{background:#c88f20;color:#fff}
+.bk-login,.bk-profile-link,.bk-logout-link{min-height:44px;height:44px;border-radius:12px;font-size:12px;line-height:1.5;font-weight:700}
+.bk-login{background:var(--bk-btn-primary);color:#fff;padding:0 20px}
+.bk-login:hover{background:var(--bk-btn-primary-hover);color:#fff}
+.bk-profile-link{background:var(--bk-btn-primary);border-color:var(--bk-btn-primary);color:#fff;padding:0 20px}
+.bk-profile-link:hover{background:var(--bk-btn-primary-hover);border-color:var(--bk-btn-primary-hover);color:#fff}
+.bk-logout-link{background:#fff;color:var(--bk-btn-primary);border:1px solid var(--bk-btn-border);padding:0 20px}
+.bk-logout-link:hover{background:#faf5fd;border-color:var(--bk-btn-primary);color:var(--bk-btn-primary)}
+.bk-course-link{height:36px;min-height:36px;padding:0 14px;border:1px solid var(--bk-btn-border);border-radius:14px;font-size:12px;line-height:1.5;font-weight:600;color:var(--bk-btn-primary);background:#fff;display:flex;align-items:center;justify-content:center}
+.bk-course-link:hover{background:#faf5fd;border-color:var(--bk-btn-primary);color:var(--bk-btn-primary)}
+.bk-center .bk-btn{min-height:48px}
+@media(max-width:760px){.bk-btn,.bk-btn-outline,.bk-btn-gold{min-height:48px;padding:0 22px;font-size:12px;border-radius:12px}.bk-login,.bk-profile-link,.bk-logout-link{height:44px;min-height:44px;font-size:12px;padding:0 14px}.bk-course-link{height:44px;min-height:44px;font-size:12px;border-radius:14px}}
