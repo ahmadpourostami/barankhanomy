@@ -2,9 +2,6 @@
 /**
  * Tutor LMS Question and Answer template override.
  *
- * This file intentionally mirrors the active Tutor LMS template supplied for
- * the site, so the Q&A functionality remains compatible with Tutor LMS.
- *
  * @package BaranKhanomy
  */
 
@@ -100,12 +97,9 @@ if ( $is_load_more ) {
 	}
 	return;
 }
-?>
-<h3 class="tutor-fs-5 tutor-fw-bold tutor-color-black tutor-mb-20">
-	<?php esc_html_e( 'Question & Answer', 'tutor' ); ?>
-</h3>
 
-<?php
+// The course tab already renders the Question & Answer heading.
+// Keep only the question form and question list here to avoid a duplicate title.
 tutor_load_template_from_custom_path(
 	tutor()->path . '/views/qna/qna-new.php',
 	array(
