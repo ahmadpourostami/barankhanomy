@@ -44,7 +44,12 @@
         ?>
         <div class="bk-user-actions" aria-label="حساب کاربری">
           <a class="bk-profile-link" href="<?php echo esc_url( $bk_profile_url ); ?>">
-            <span class="bk-profile-icon" aria-hidden="true">♙</span>
+            <span class="bk-profile-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false" role="img" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.5"></circle>
+                <path d="M5.5 19c.7-3.2 3.1-5 6.5-5s5.8 1.8 6.5 5"></path>
+              </svg>
+            </span>
             <span>پروفایل</span>
           </a>
           <a class="bk-logout-link" href="<?php echo esc_url( $bk_logout_url ); ?>">خروج</a>
